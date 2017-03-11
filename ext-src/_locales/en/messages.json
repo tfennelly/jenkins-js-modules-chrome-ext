@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Jenkins js-modules Developer Tools",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Chrome Developer Tools for Jenkins js-modules",
+    "description": "The description of the application"
+  }
+}
