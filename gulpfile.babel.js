@@ -4,6 +4,7 @@ import del from 'del';
 import browserify from 'browserify';
 import runSequence from 'run-sequence';
 import source from 'vinyl-source-stream';
+import watch from 'gulp-watch';
 
 gulp.task('clean', del.bind(null, ['dist']));
 
@@ -24,6 +25,13 @@ function bundle(filename) {
 gulp.task('bundle', cb => {
     runSequence(bundleSubTasks, cb);
 });
+
+gulp.task('bundle:watch', function () {
+    return watch(['ext-src/**/*', 'src/**/*'], function () {
+        runSequence(bundleSubTasks);
+    });
+});
+
 const copySubTasks = [];
 function copy(from, to) {
     const taskName = 'copy: ' + from + ' --> ' + to;
