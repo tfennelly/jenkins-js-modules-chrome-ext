@@ -27,6 +27,8 @@ gulp.task('bundle', cb => {
 });
 
 gulp.task('bundle:watch', function () {
+    // Might need to add something like gulp-plumber if the watch borks due to errors.
+    // See https://github.com/floatdrop/gulp-watch/blob/master/docs/readme.md#prevent-pipe-breaking-on-errors
     return watch(['ext-src/**/*', 'src/**/*'], function () {
         runSequence(bundleSubTasks);
     });
