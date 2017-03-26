@@ -15,11 +15,11 @@
         },
         methods: {
             loadJsModulesInfo: function(callback) {
-                messaging.onMessageFromInspectedPage("js.modules.info", function(info) {
+                messaging.onMessageFromInspectedPage("script-urls-list", function(info) {
                     console.log('***', info.scripts);
                     callback(info.scripts);
                 });
-                messaging.executeScriptOnInspectedPage("scripts/content-scripts/js-modules-info.js");
+                messaging.executeScriptOnInspectedPage("scripts/content-scripts/script-urls-list.js");
             }
         }
     }

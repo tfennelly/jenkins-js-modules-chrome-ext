@@ -13,6 +13,6 @@ for (let i = 0; i < scriptElements.length; i++) {
 }
 
 // Send them to the panel.
-message.sendMessageToPanel('js.modules.info', {
+message.sendMessageToPanel('script-urls-list', {
     scripts: scripts
 });
