@@ -3,22 +3,30 @@
         <p class="lead">
             js-modules analysis.
         </p>
+        <TrackingEvents :trackingEvents="jsModulesInfo.trackingEvents"></TrackingEvents>
     </div>
 </template>
 
 <script>
+    import TrackingEvents from './debug/TrackingEvents.vue'
+
     export default {
+        components: {
+            TrackingEvents
+        },
         props: {
             loadJsModulesInfo: Function
         },
         data () {
             const data = {
-                jsModulesInfo: []
+                jsModulesInfo: {
+                    bundles: [],
+                    trackingEvents: []
+                }
             };
 
             this.loadJsModulesInfo(function (jsModulesInfo) {
                 data.jsModulesInfo = jsModulesInfo;
-                console.log('**** jsModulesInfo: ', jsModulesInfo);
             });
 
             return data;
