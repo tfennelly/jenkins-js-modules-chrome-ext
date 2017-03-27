@@ -10,9 +10,9 @@
 
     let loadJsModulesInfoCallback = undefined;
 
-    messaging.onMessageFromInspectedPage("bundle-data", function(response) {
+    messaging.onMessageFromInspectedPage("bundle-data", function(data) {
         if (loadJsModulesInfoCallback) {
-            loadJsModulesInfoCallback(response.data);
+            loadJsModulesInfoCallback(data);
         }
     });
 

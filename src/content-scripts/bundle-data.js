@@ -13,9 +13,19 @@ for (let i = 0; i < scriptElements.length; i++) {
     }
 }
 
-jsmodules.getBundleData(scripts, function (scriptInfo) {
+// Gather all the bundle tracking events from the sessionStorage.
+var bundleTrackingEvents = [];
+for (var i = 0; i < sessionStorage.length; i++) {
+    var key = sessionStorage.key(i);
+    if (key.indexOf('jenkins-cd/js-modules/tracking/') === 0) {
+        bundleTrackingEvents.push(sessionStorage.getItem(key));
+    }
+}
+
+jsmodules.getBundleData(scripts, function (bundleInfo) {
     // Send them to the panel.
     message.sendMessageToPanel('bundle-data', {
-        data: scriptInfo
+        bundles: bundleInfo,
+        trackingEvents: bundleTrackingEvents
     });
 });
