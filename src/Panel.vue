@@ -8,6 +8,14 @@
     import messaging from './messaging';
     import JSModulesInfo from './components/JSModulesInfo.vue'
 
+    let loadJsModulesInfoCallback = undefined;
+
+    messaging.onMessageFromInspectedPage("script-urls-list", function(info) {
+        if (loadJsModulesInfoCallback) {
+            loadJsModulesInfoCallback(info.scripts);
+        }
+    });
+
     export default {
         name: 'Panel',
         components: {
@@ -15,10 +23,7 @@
         },
         methods: {
             loadJsModulesInfo: function(callback) {
-                messaging.onMessageFromInspectedPage("script-urls-list", function(info) {
-                    console.log('***', info.scripts);
-                    callback(info.scripts);
-                });
+                loadJsModulesInfoCallback = callback;
                 messaging.executeScriptOnInspectedPage("scripts/content-scripts/script-urls-list.js");
             }
         }

@@ -1,4 +1,5 @@
-const message = require('./../messaging');
+import jsmodules from '../jsmodules';
+import message from '../messaging';
 
 const scripts = [];
 
@@ -12,7 +13,9 @@ for (let i = 0; i < scriptElements.length; i++) {
     }
 }
 
-// Send them to the panel.
-message.sendMessageToPanel('script-urls-list', {
-    scripts: scripts
+jsmodules.getBundleData(scripts, function (scriptInfo) {
+    // Send them to the panel.
+    message.sendMessageToPanel('script-urls-list', {
+        scripts: scriptInfo
+    });
 });

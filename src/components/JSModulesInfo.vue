@@ -18,6 +18,7 @@
 
             this.loadJsModulesInfo(function (jsModulesInfo) {
                 data.jsModulesInfo = jsModulesInfo;
+                console.log('**** jsModulesInfo: ', jsModulesInfo);
             });
 
             return data;
