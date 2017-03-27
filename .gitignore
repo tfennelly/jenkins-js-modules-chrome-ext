@@ -2,4 +2,5 @@
 .idea/
 node_modules
 dist/
+dist-play/
 npm-debug.log
