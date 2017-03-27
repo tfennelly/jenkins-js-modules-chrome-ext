@@ -1,8 +1,8 @@
 <template>
     <div class="trackingEvents">
-        <pre v-for="trackingEvent in trackingEvents">
-            {{ trackingEvent }}
-        </pre>
+        [
+        <pre v-for="(trackingEvent, index) in trackingEvents">{{(index > 0 ? ',' : '')}}{{trackingEvent}}</pre>
+        ]
     </div>
 </template>
 
@@ -15,7 +15,7 @@
 </script>
 
 <style>
-    .trackingEvents {
-        padding: 5px;
+    .trackingEvents pre {
+        padding: 0px;
     }
 </style>
