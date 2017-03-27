@@ -3,16 +3,15 @@
         <p class="lead">
             js-modules analysis.
         </p>
-        <TrackingEvents :trackingEvents="jsModulesInfo.trackingEvents"></TrackingEvents>
     </div>
 </template>
 
 <script>
-    import TrackingEvents from './debug/TrackingEvents.vue'
+    import ArrayDump from './debug/ArrayDump.vue'
 
     export default {
         components: {
-            TrackingEvents
+            ArrayDump
         },
         props: {
             loadJsModulesInfo: Function
