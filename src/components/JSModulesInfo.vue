@@ -1,17 +1,15 @@
 <template>
     <div class="jsModulesInfo">
-        <p class="lead">
-            js-modules analysis.
-        </p>
+        <BundleListing :trackingEvents="jsModulesInfo.trackingEvents"></BundleListing>
     </div>
 </template>
 
 <script>
-    import ArrayDump from './debug/ArrayDump.vue'
+    import BundleListing from './BundleListing.vue'
 
     export default {
         components: {
-            ArrayDump
+            BundleListing
         },
         props: {
             loadJsModulesInfo: Function
