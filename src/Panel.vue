@@ -10,9 +10,9 @@
 
     let loadJsModulesInfoCallback = undefined;
 
-    messaging.onMessageFromInspectedPage("script-urls-list", function(info) {
+    messaging.onMessageFromInspectedPage("bundle-data", function(response) {
         if (loadJsModulesInfoCallback) {
-            loadJsModulesInfoCallback(info.scripts);
+            loadJsModulesInfoCallback(response.data);
         }
     });
 
@@ -24,7 +24,7 @@
         methods: {
             loadJsModulesInfo: function(callback) {
                 loadJsModulesInfoCallback = callback;
-                messaging.executeScriptOnInspectedPage("scripts/content-scripts/script-urls-list.js");
+                messaging.executeScriptOnInspectedPage("scripts/content-scripts/bundle-data.js");
             }
         }
     }

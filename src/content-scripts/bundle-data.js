@@ -15,7 +15,7 @@ for (let i = 0; i < scriptElements.length; i++) {
 
 jsmodules.getBundleData(scripts, function (scriptInfo) {
     // Send them to the panel.
-    message.sendMessageToPanel('script-urls-list', {
-        scripts: scriptInfo
+    message.sendMessageToPanel('bundle-data', {
+        data: scriptInfo
     });
 });

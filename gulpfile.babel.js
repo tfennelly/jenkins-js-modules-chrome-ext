@@ -63,4 +63,4 @@ bundle('devtools.js');
 bundle('panel.js');
 
 // Bundle content scripts
-bundle('content-scripts/script-urls-list.js');
+bundle('content-scripts/bundle-data.js');
