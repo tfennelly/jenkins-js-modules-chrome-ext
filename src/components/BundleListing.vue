@@ -3,7 +3,16 @@
         <p class="lead">
             The following js-module bundles were loaded
         </p>
-        <div class="bundleName" v-for="trackingEvent in loadEvents">{{trackingEvent.bundleId}}</div>
+        <table>
+            <tr>
+                <td class="list">
+                    <div class="bundleName" v-for="trackingEvent in loadEvents">{{trackingEvent.bundleId}}</div>
+                </td>
+                <td class="detail">
+                    Stuff
+                </td>
+            </tr>
+        </table>
     </div>
 </template>
 
@@ -45,8 +54,24 @@
     .bundleListing {
         padding: 5px;
     }
+
     .bundleListing .bundleName {
         font-size: 0.8rem;
-        line-height: 1.3;
+        line-height: 1;
+        padding: 5px;
+    }
+    .bundleListing .bundleName:hover {
+        cursor: pointer;
+        background: lightgrey;
+    }
+
+    .bundleListing td {
+        vertical-align: top;
+    }
+    .bundleListing td.list {
+        padding-left: 10px;
+    }
+    .bundleListing td.detail {
+        padding-left: 20px;
     }
 </style>
