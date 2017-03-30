@@ -1,15 +1,23 @@
 <template>
     <div class="jsModulesInfo">
-        <BundleListing :trackingEvents="jsModulesInfo.trackingEvents"></BundleListing>
+        <b-tabs small card ref="tabs" v-model="tabIndex">
+            <b-tab title="Bundles">
+                <BundleListing :trackingEvents="jsModulesInfo.trackingEvents"></BundleListing>
+            </b-tab>
+            <b-tab title="Raw">
+                <Raw :bundles="jsModulesInfo.bundles"></Raw>
+            </b-tab>
+        </b-tabs>
     </div>
 </template>
 
 <script>
     import BundleListing from './BundleListing.vue'
+    import Raw from './Raw.vue'
 
     export default {
         components: {
-            BundleListing
+            BundleListing, Raw
         },
         props: {
             loadJsModulesInfo: Function

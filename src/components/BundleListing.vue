@@ -3,7 +3,7 @@
         <p class="lead">
             The following js-module bundles were loaded
         </p>
-        <div v-for="trackingEvent in loadEvents">{{trackingEvent.bundleId}}</div>
+        <div class="bundleName" v-for="trackingEvent in loadEvents">{{trackingEvent.bundleId}}</div>
     </div>
 </template>
 
@@ -44,5 +44,9 @@
 <style>
     .bundleListing {
         padding: 5px;
+    }
+    .bundleListing .bundleName {
+        font-size: 0.8rem;
+        line-height: 1.3;
     }
 </style>

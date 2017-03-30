@@ -10,7 +10,7 @@ export default {
 
         function doGet(scriptUrl) {
             $.ajax({
-                url: scriptUrl + '-json.js',
+                url: scriptUrl + '-info.js',
                 complete: function(response) {
                     responses.push({
                         script: scriptUrl,

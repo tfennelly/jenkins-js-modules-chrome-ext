@@ -26,11 +26,14 @@
                 }
 
                 sampleDataLoader.getBundleTrackingData(function (trackingData) {
-                    console.log(trackingData);
                     jsModulesInfo.trackingEvents = JSON.parse(trackingData);
-                    jsModulesInfo.bundles = [];
                     checkLoaded();
-                })
+                });
+
+                sampleDataLoader.getBundleData(function (bundleData) {
+                    jsModulesInfo.bundles = JSON.parse(bundleData);
+                    checkLoaded();
+                });
             }
         }
     }

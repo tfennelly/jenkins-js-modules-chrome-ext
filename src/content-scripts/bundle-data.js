@@ -18,7 +18,7 @@ var bundleTrackingEvents = [];
 for (var i = 0; i < sessionStorage.length; i++) {
     var key = sessionStorage.key(i);
     if (key.indexOf('jenkins-cd/js-modules/tracking/') === 0) {
-        bundleTrackingEvents.push(sessionStorage.getItem(key));
+        bundleTrackingEvents.push(JSON.parse(sessionStorage.getItem(key)));
     }
 }
 
