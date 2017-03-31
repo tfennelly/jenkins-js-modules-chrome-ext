@@ -9,6 +9,12 @@
                     <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
                 </td>
             </tr>
+            <tr v-if="moduleDef.stubbed">
+                <td title="This module is imported from another bundle">Imported from</td>
+                <td>
+                    <code>{{importedFrom}}</code>
+                </td>
+            </tr>
         </table>
 
     </div>
@@ -16,6 +22,7 @@
 
 <script>
     import _s from 'underscore.string';
+    import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
 
     export default {
         props: {
@@ -31,14 +38,23 @@
                     return _s.ltrim(packageInfo.repository.url, 'git+');
                 }
                 return undefined;
+            },
+            importedFrom: function() {
+                if (this.moduleDef.stubbed) {
+                    const moduleSpec = new ModuleSpec(this.moduleDef.stubbed.importModule);
+                    return `${moduleSpec.moduleName}@${moduleSpec.moduleVersion}`;
+                }
+                return undefined;
             }
+        },
+        methods: {
         }
     }
 </script>
 
 <style>
     .moduleDef #overview-table td:first-child {
-        padding-right: 10px;
+        padding: 0px 10px 0px 20px;
         font-weight: bold;
     }
 
