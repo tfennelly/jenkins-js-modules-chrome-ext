@@ -57,10 +57,14 @@
                 const bundleLoadEvent = this.trackingEvents.filter(function (trackingEvent) {
                     return (trackingEvent.event === 'load' && trackingEvent.bundleId === bundleId);
                 })[0];
+                const bundleExportEvents = this.trackingEvents.filter(function (trackingEvent) {
+                    return (trackingEvent.event === 'export' && trackingEvent.bundleId === bundleId);
+                });
                 const bundleDetails = jsmodules.findBundleByScriptPath(bundleLoadEvent.bundlePath, this.bundles);
 
                 this.bundle = {
                     loadEvent: bundleLoadEvent,
+                    exportEvents: bundleExportEvents,
                     bundleDetails: bundleDetails
                 };
             }
@@ -86,6 +90,14 @@
         padding: 20px 5px;
     }
 
+    .bundleListing table {
+        width: 100%;
+    }
+
+    .bundleListing td.list {
+        width: 20%;
+    }
+
     .bundleListing .no-bundle-selected {
         font-size: 1.2rem;
     }
@@ -93,6 +105,8 @@
     .bundleListing .bundleName {
         line-height: 1;
         padding: 5px;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .bundleListing .bundleName:hover {
         cursor: pointer;

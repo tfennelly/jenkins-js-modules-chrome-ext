@@ -65,6 +65,7 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
+    "@jenkins-cd/js-modules": "0.0.9",
     "underscore.string": "^3.3.4"
   }
 }
