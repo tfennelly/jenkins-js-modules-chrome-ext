@@ -81,5 +81,10 @@
     .jsModulesInfo .no-jsmodules {
         padding: 20px;
     }
-
+    .tabs li.nav-item:last-child .nav-link {
+        opacity: 0.4;
+    }
+    .tabs li.nav-item:last-child .nav-link.active {
+        opacity: 1.0;
+    }
 </style>
