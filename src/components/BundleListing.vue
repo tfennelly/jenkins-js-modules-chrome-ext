@@ -3,7 +3,9 @@
         <table>
             <tr>
                 <td class="list">
-                    <div class="bundleName" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
+                    <div class="loaded">
+                        <div class="bundleName" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
+                    </div>
                 </td>
                 <td class="detail">
                     <div v-if="!bundle" title="Select one of the bundles in the left panel">
@@ -85,7 +87,6 @@
     }
 
     .bundleListing .bundleName {
-        font-size: 0.8rem;
         line-height: 1;
         padding: 5px;
     }
