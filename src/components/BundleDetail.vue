@@ -29,7 +29,12 @@
             </tr>
         </table>
 
-        <h4>Import/Export</h4>
+        <div class="jump-tos">
+            <div><a href="#import-export-heading">Import/Export</a></div>
+            <div><a href="#modules-heading">Bundled Module Listing</a></div>
+        </div>
+
+        <h4 id="import-export-heading">Import/Export</h4>
         <table id="export-import">
             <thead>
                 <th>Imports</th>
@@ -41,7 +46,7 @@
             </tr>
         </table>
 
-        <h4>Modules</h4>
+        <h4 id="modules-heading">Bundled Module Listing</h4>
         <div id="moduleDefs">
             <div class="form-inline filter">
                 <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="setTextFilter(moduleDefsFilter)" />
@@ -174,6 +179,14 @@
     .bundleDetail {
         padding: 10px;
     }
+
+    .bundleDetail .jump-tos {
+        border: solid 1px #d3d3d3;
+        border-radius: 3px;
+        padding: 10px 10px;
+        margin-bottom: 20px;
+    }
+
     .bundleDetail table {
         margin: 20px 0px;
     }
