@@ -44,8 +44,8 @@
         <h4>Modules</h4>
         <div id="moduleDefs">
             <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="filterModuleDefs(moduleDefsFilter)"/>
-            <div class="moduleDef"v-for="moduleDef in filteredModuleDefs">
-                <h6>{{moduleDef.id}}</h6>
+            <div v-for="moduleDefInst in filteredModuleDefs">
+                <ModuleDef :moduleDef="moduleDefInst"></ModuleDef>
             </div>
         </div>
 
@@ -55,6 +55,7 @@
 <script>
     import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
     import Version from '@jenkins-cd/js-modules/js/Version';
+    import ModuleDef from './ModuleDef.vue';
 
     function getDecodedBundle() {
         if (!this.bundle.bundleDetails.decoded) {
@@ -72,11 +73,11 @@
             if (moduleDefs.hasOwnProperty(moduleName)) {
                 const moduleDef = moduleDefs[moduleName];
 
-                if (!moduleDefsFilter) {
+                if (!this.moduleFilter) {
                     moduleDefsList.push(moduleDef);
                 } else {
                     // A filter was supplied
-                    if (moduleDef.id.indexOf(moduleDefsFilter) !== -1) {
+                    if (moduleDef.id.indexOf(this.moduleFilter) !== -1) {
                         moduleDefsList.push(moduleDef);
                     }
                 }
@@ -86,6 +87,9 @@
     }
 
     export default {
+        components: {
+            ModuleDef
+        },
         props: {
             bundle: Object
         },
@@ -100,12 +104,12 @@
                 return count;
             },
             filterModuleDefs: function(moduleDefsFilter) {
-                this.filteredModuleDefs = doModuleDefsFilter.call(this, moduleDefsFilter);
+                this.moduleFilter = moduleDefsFilter;
             }
         },
         data: function () {
             return {
-                filteredModuleDefs: doModuleDefsFilter.call(this)
+                moduleFilter: undefined
             }
         },
         computed: {
@@ -139,6 +143,9 @@
                     }
                 }
                 return imports;
+            },
+            filteredModuleDefs: function() {
+                return doModuleDefsFilter.call(this);
             }
         }
     }
