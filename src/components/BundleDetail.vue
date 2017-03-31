@@ -43,9 +43,16 @@
 
         <h4>Modules</h4>
         <div id="moduleDefs">
-            <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="filterModuleDefs(moduleDefsFilter)"/>
+            <div class="form-inline filter">
+                <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="setTextFilter(moduleDefsFilter)" />
+                <input class="checkbox" type="checkbox" v-model="showBundledModules" @change="setShowBundledFilter(showBundledModules)" /> Bundled
+                <input class="checkbox" type="checkbox" v-model="showImportedModules" @change="setShowImportedFilter(showImportedModules)" /> Imported
+            </div>
             <div v-for="moduleDefInst in filteredModuleDefs">
                 <ModuleDef :moduleDef="moduleDefInst"></ModuleDef>
+            </div>
+            <div class="tweak-filter-settings" v-if="filteredModuleDefs.length === 0">
+                No modules to show. Try changing the filter parameters.
             </div>
         </div>
 
@@ -62,28 +69,6 @@
             this.bundle.bundleDetails.decoded = JSON.parse(this.bundle.bundleDetails.data);
         }
         return this.bundle.bundleDetails.decoded;
-    }
-
-    function doModuleDefsFilter(moduleDefsFilter) {
-        const moduleDefsList = [];
-
-        const moduleDefs = getDecodedBundle.call(this).moduleDefs;
-
-        for (const moduleName in moduleDefs) {
-            if (moduleDefs.hasOwnProperty(moduleName)) {
-                const moduleDef = moduleDefs[moduleName];
-
-                if (!this.moduleFilter) {
-                    moduleDefsList.push(moduleDef);
-                } else {
-                    // A filter was supplied
-                    if (moduleDef.id.indexOf(this.moduleFilter) !== -1) {
-                        moduleDefsList.push(moduleDef);
-                    }
-                }
-            }
-        }
-        return moduleDefsList;
     }
 
     export default {
@@ -103,13 +88,21 @@
                 }
                 return count;
             },
-            filterModuleDefs: function(moduleDefsFilter) {
-                this.moduleFilter = moduleDefsFilter;
+            setTextFilter: function(moduleDefsFilter) {
+                this.textFilter = moduleDefsFilter;
+            },
+            setShowBundledFilter: function(showBundledModules) {
+                this.showBundledModules = showBundledModules;
+            },
+            setShowImportedFilter: function(showImportedModules) {
+                this.showImportedModules = showImportedModules;
             }
         },
         data: function () {
             return {
-                moduleFilter: undefined
+                textFilter: undefined,
+                showBundledModules: true,
+                showImportedModules: true
             }
         },
         computed: {
@@ -145,7 +138,33 @@
                 return imports;
             },
             filteredModuleDefs: function() {
-                return doModuleDefsFilter.call(this);
+                const moduleDefsList = [];
+
+                const moduleDefs = getDecodedBundle.call(this).moduleDefs;
+
+                for (const moduleName in moduleDefs) {
+                    if (moduleDefs.hasOwnProperty(moduleName)) {
+                        const moduleDef = moduleDefs[moduleName];
+
+                        if (this.textFilter) {
+                            // A text filter was supplied
+                            if (moduleDef.id.indexOf(this.textFilter) === -1) {
+                                continue;
+                            }
+                        }
+                        if (!moduleDef.stubbed && !this.showBundledModules) {
+                            continue;
+                        }
+                        if (moduleDef.stubbed && !this.showImportedModules) {
+                            continue;
+                        }
+
+                        // Passed all filtering tests, so add it.
+                        moduleDefsList.push(moduleDef);
+                    }
+                }
+
+                return moduleDefsList;
             }
         }
     }
@@ -177,7 +196,14 @@
         padding: 5px 0px;
     }
 
-    #moduleDefsFilter {
+    #moduleDefs .filter {
         margin: 20px 0px;
+    }
+    #moduleDefs .filter input.checkbox {
+        margin: 0px 5px 0px 10px;
+    }
+
+    .bundleDetail .tweak-filter-settings {
+        opacity: 0.5;
     }
 </style>
