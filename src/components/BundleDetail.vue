@@ -41,12 +41,49 @@
             </tr>
         </table>
 
+        <h4>Modules</h4>
+        <div id="moduleDefs">
+            <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="filterModuleDefs(moduleDefsFilter)"/>
+            <div class="moduleDef"v-for="moduleDef in filteredModuleDefs">
+                <h6>{{moduleDef.id}}</h6>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
     import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
     import Version from '@jenkins-cd/js-modules/js/Version';
+
+    function getDecodedBundle() {
+        if (!this.bundle.bundleDetails.decoded) {
+            this.bundle.bundleDetails.decoded = JSON.parse(this.bundle.bundleDetails.data);
+        }
+        return this.bundle.bundleDetails.decoded;
+    }
+
+    function doModuleDefsFilter(moduleDefsFilter) {
+        const moduleDefsList = [];
+
+        const moduleDefs = getDecodedBundle.call(this).moduleDefs;
+
+        for (const moduleName in moduleDefs) {
+            if (moduleDefs.hasOwnProperty(moduleName)) {
+                const moduleDef = moduleDefs[moduleName];
+
+                if (!moduleDefsFilter) {
+                    moduleDefsList.push(moduleDef);
+                } else {
+                    // A filter was supplied
+                    if (moduleDef.id.indexOf(moduleDefsFilter) !== -1) {
+                        moduleDefsList.push(moduleDef);
+                    }
+                }
+            }
+        }
+        return moduleDefsList;
+    }
 
     export default {
         props: {
@@ -61,14 +98,19 @@
                     }
                 }
                 return count;
+            },
+            filterModuleDefs: function(moduleDefsFilter) {
+                this.filteredModuleDefs = doModuleDefsFilter.call(this, moduleDefsFilter);
+            }
+        },
+        data: function () {
+            return {
+                filteredModuleDefs: doModuleDefsFilter.call(this)
             }
         },
         computed: {
             decoded: function() {
-                if (!this.bundle.bundleDetails.decoded) {
-                    this.bundle.bundleDetails.decoded = JSON.parse(this.bundle.bundleDetails.data);
-                }
-                return this.bundle.bundleDetails.decoded;
+                return getDecodedBundle.call(this);
             },
             exports: function() {
                 return this.bundle.exportEvents.filter(function (exportEvent) {
@@ -126,5 +168,9 @@
     }
     #export-import .moduleName {
         padding: 5px 0px;
+    }
+
+    #moduleDefsFilter {
+        margin: 20px 0px;
     }
 </style>
