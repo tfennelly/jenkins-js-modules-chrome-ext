@@ -32,12 +32,12 @@
         <h4>Import/Export</h4>
         <table id="export-import">
             <thead>
-                <th>Exports</th>
                 <th>Imports</th>
+                <th>Exports</th>
             </thead>
             <tr>
+                <td><div class="moduleName" v-for="importedModule in imports"><code>{{importedModule}}</code></div></td>
                 <td><div class="moduleName" v-for="exportEvent in exports"><code>{{exportEvent.moduleSpec.moduleName}}@{{exportEvent.moduleSpec.moduleVersion}}</code></div></td>
-                <td><code></code></td>
             </tr>
         </table>
 
@@ -80,7 +80,20 @@
                 });
             },
             imports: function() {
-
+                const imports = [];
+                const moduleDefs = this.decoded.moduleDefs;
+                for (const moduleName in moduleDefs) {
+                    if (moduleDefs.hasOwnProperty(moduleName)) {
+                        const moduleDef = moduleDefs[moduleName];
+                        if (moduleDef.stubbed) {
+                            if (!moduleDef.stubbed.moduleSpec) {
+                                moduleDef.stubbed.moduleSpec = new ModuleSpec(moduleDef.stubbed.importModule);
+                            }
+                            imports.push(`${moduleDef.stubbed.moduleSpec.moduleName}@${moduleDef.stubbed.moduleSpec.moduleVersion}`);
+                        }
+                    }
+                }
+                return imports;
             }
         }
     }
