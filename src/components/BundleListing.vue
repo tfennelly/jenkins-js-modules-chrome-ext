@@ -1,15 +1,24 @@
 <template>
     <div class="bundleListing">
-        <p class="lead">
-            The following js-module bundles were loaded
-        </p>
         <table>
             <tr>
                 <td class="list">
-                    <div class="bundleName" v-for="trackingEvent in loadEvents">{{trackingEvent.bundleId}}</div>
+                    <div class="bundleName" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
                 </td>
                 <td class="detail">
-                    Stuff
+                    <div v-if="!bundle" title="Select one of the bundles in the left panel">
+                        <b-badge>No bundle selected in left panel</b-badge>
+                    </div>
+                    <div v-else>
+                        <div v-if="!bundle.bundleDetails">
+                            <b-alert state="danger" show>
+                                Hmmm something's not right here. We were unable to find a matching bundle for {{bundle.loadEvent.bundleId}}.
+                            </b-alert>
+                        </div>
+                        <div v-else>
+                            <BundleDetail :bundle="bundle"></BundleDetail>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -17,6 +26,8 @@
 </template>
 
 <script>
+    import BundleDetail from './BundleDetail.vue';
+    import jsmodules from '../jsmodules';
 
     function sortByTime(trackingEventList) {
         trackingEventList.sort(function (event1, event2) {
@@ -33,11 +44,29 @@
 
     export default {
         components: {
+            BundleDetail
         },
         props: {
-            trackingEvents: Array
+            trackingEvents: Array,
+            bundles: Array
         },
         methods: {
+            selectBundle: function (bundleId) {
+                const bundleLoadEvent = this.trackingEvents.filter(function (trackingEvent) {
+                    return (trackingEvent.event === 'load' && trackingEvent.bundleId === bundleId);
+                })[0];
+                const bundleDetails = jsmodules.findBundleByScriptPath(bundleLoadEvent.bundlePath, this.bundles);
+
+                this.bundle = {
+                    loadEvent: bundleLoadEvent,
+                    bundleDetails: bundleDetails
+                };
+            }
+        },
+        data () {
+            return {
+                bundle: undefined
+            };
         },
         computed: {
             loadEvents: function() {
@@ -52,7 +81,7 @@
 
 <style>
     .bundleListing {
-        padding: 5px;
+        padding: 20px 5px;
     }
 
     .bundleListing .bundleName {

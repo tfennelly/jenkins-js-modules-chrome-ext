@@ -63,5 +63,8 @@
     "vue-play-cli": "^1.1.1",
     "vueify": "^9.0.0",
     "watchify": "^3.4.0"
+  },
+  "dependencies": {
+    "underscore.string": "^3.3.4"
   }
 }

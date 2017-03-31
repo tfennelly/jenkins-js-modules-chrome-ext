@@ -2,10 +2,10 @@
     <div class="jsModulesInfo">
         <b-tabs small card ref="tabs" v-model="tabIndex">
             <b-tab title="Bundles">
-                <BundleListing :trackingEvents="jsModulesInfo.trackingEvents"></BundleListing>
+                <BundleListing :trackingEvents="jsModulesInfo.trackingEvents" :bundles="jsModulesInfo.bundles"></BundleListing>
             </b-tab>
             <b-tab title="Raw">
-                <Raw :bundles="jsModulesInfo.bundles"></Raw>
+                <Raw :trackingEvents="jsModulesInfo.trackingEvents" :bundles="jsModulesInfo.bundles"></Raw>
             </b-tab>
         </b-tabs>
     </div>
