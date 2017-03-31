@@ -8,8 +8,8 @@
                     </div>
                 </td>
                 <td class="detail">
-                    <div v-if="!bundle" title="Select one of the bundles in the left panel">
-                        <b-badge>No bundle selected in left panel</b-badge>
+                    <div class="no-bundle-selected" v-if="!bundle" title="Select one of the bundles in the left panel">
+                        <b-badge>Select bundle in left panel</b-badge>
                     </div>
                     <div v-else>
                         <div v-if="!bundle.bundleDetails">
@@ -84,6 +84,10 @@
 <style>
     .bundleListing {
         padding: 20px 5px;
+    }
+
+    .bundleListing .no-bundle-selected {
+        font-size: 1.2rem;
     }
 
     .bundleListing .bundleName {
