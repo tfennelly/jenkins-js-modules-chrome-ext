@@ -89,7 +89,10 @@
                             if (!moduleDef.stubbed.moduleSpec) {
                                 moduleDef.stubbed.moduleSpec = new ModuleSpec(moduleDef.stubbed.importModule);
                             }
-                            imports.push(`${moduleDef.stubbed.moduleSpec.moduleName}@${moduleDef.stubbed.moduleSpec.moduleVersion}`);
+                            var importName = `${moduleDef.stubbed.moduleSpec.moduleName}@${moduleDef.stubbed.moduleSpec.moduleVersion}`;
+                            if (imports.indexOf(importName) === -1) {
+                                imports.push(importName);
+                            }
                         }
                     }
                 }
