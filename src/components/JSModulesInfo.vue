@@ -5,10 +5,16 @@
                 See the "<strong>Other</strong>" tab for scripts that don't expose <code>js-modules</code> metadata.
             </b-alert>
         </div>
-        <b-tabs small card ref="tabs" v-model="tabIndex">
+        <b-tabs small>
             <b-tab title="Bundles">
                 <BundleListing :trackingEvents="jsModulesInfo.trackingEvents" :bundles="jsModulesInfo.bundles"></BundleListing>
             </b-tab>
+            <!--
+                TODO: Find a way of putting the number of scripts on the "Other" tab label.
+                Tried binding (via :title) from a computed value. Value does get recomputed,
+                but it seems like <b-tabs> is not picking up the recomputed value. I (TF) didn't
+                investigate any more than that.
+            -->
             <b-tab title="Other">
                 <div class="no-jsmodules" v-if="noJSModulesInfo.length > 0">
                     <p class="lead">
