@@ -4,7 +4,7 @@
             <tr>
                 <td class="list">
                     <div class="loaded">
-                        <div class="bundleName" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
+                        <div :class="bundleNameClasses(trackingEvent)" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
                     </div>
                 </td>
                 <td class="detail">
@@ -67,6 +67,9 @@
                     exportEvents: bundleExportEvents,
                     bundleDetails: bundleDetails
                 };
+            },
+            bundleNameClasses: function(loadEvent) {
+                return `bundleName ${this.bundle && loadEvent.bundleId === this.bundle.loadEvent.bundleId ? 'selected' : ''}`;
             }
         },
         data () {
@@ -110,7 +113,10 @@
     }
     .bundleListing .bundleName:hover {
         cursor: pointer;
-        background: lightgrey;
+    }
+    .bundleListing .bundleName:hover, .bundleListing .bundleName.selected {
+        background: #989898;
+        color: white;
     }
 
     .bundleListing td {
