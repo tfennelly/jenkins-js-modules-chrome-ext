@@ -1,9 +1,9 @@
 <template>
     <div class="jsModulesInfo">
         <div v-if="noJSModulesInfo.length > 0">
-            <b-alert dismissible show @dismissed="showDismissibleAlert=false">
+            <Alert type="info" dismissible>
                 See the "<strong>Other</strong>" tab for scripts that don't expose <code>js-modules</code> metadata.
-            </b-alert>
+            </Alert>
         </div>
         <b-tabs small>
             <b-tab title="Bundles">
@@ -43,12 +43,13 @@
 </template>
 
 <script>
+    import Alert from './Alert.vue'
     import BundleListing from './BundleListing.vue'
     import Raw from './Raw.vue'
 
     export default {
         components: {
-            BundleListing, Raw
+            Alert, BundleListing, Raw
         },
         props: {
             loadJsModulesInfo: Function
