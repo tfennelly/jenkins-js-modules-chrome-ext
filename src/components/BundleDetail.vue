@@ -56,7 +56,7 @@
             <div v-for="moduleDefInst in filteredModuleDefs">
                 <ModuleDef :moduleDef="moduleDefInst"></ModuleDef>
             </div>
-            <div class="tweak-filter-settings" v-if="filteredModuleDefs.length === 0">
+            <div class="text-warning" v-if="filteredModuleDefs.length === 0">
                 No modules to show. Try changing the filter parameters.
             </div>
         </div>
@@ -214,9 +214,5 @@
     }
     #moduleDefs .filter input.checkbox {
         margin: 0px 5px 0px 10px;
-    }
-
-    .bundleDetail .tweak-filter-settings {
-        opacity: 0.5;
     }
 </style>
