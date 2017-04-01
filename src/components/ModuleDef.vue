@@ -1,21 +1,23 @@
 <template>
     <div class="moduleDef">
-        <h6>{{trimmedModuleName}}</h6>
-        <table id="overview-table">
-            <tr>
-                <td title="The NPM package from which the module was bundled">NPM Package</td>
-                <td>
-                    <code>{{moduleDef.packageInfo.name}}@{{moduleDef.packageInfo.version}}</code>
-                    <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
-                </td>
-            </tr>
-            <tr v-if="moduleDef.stubbed">
-                <td title="This module is imported from another bundle">Imported from</td>
-                <td>
-                    <code>{{importedFrom}}</code>
-                </td>
-            </tr>
-        </table>
+        <fieldset>
+            <legend>{{trimmedModuleName}}</legend>
+            <table id="overview-table">
+                <tr>
+                    <td title="The NPM package from which the module was bundled">NPM Package</td>
+                    <td>
+                        <code>{{moduleDef.packageInfo.name}}@{{moduleDef.packageInfo.version}}</code>
+                        <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
+                    </td>
+                </tr>
+                <tr v-if="moduleDef.stubbed">
+                    <td title="This module is imported from another bundle">Imported from</td>
+                    <td>
+                        <code>{{importedFrom}}</code>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
 
     </div>
 </template>
@@ -54,7 +56,8 @@
 
 <style>
     .moduleDef #overview-table td:first-child {
-        padding: 0px 10px 0px 20px;
+        width: 150px;
+        padding-right: 10px;
         font-weight: bold;
     }
 
