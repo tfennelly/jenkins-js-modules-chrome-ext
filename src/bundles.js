@@ -6,6 +6,18 @@ import $ from 'jquery';
 import _s from 'underscore.string';
 
 export default {
+    trackingEvents: function(trackingEvents) {
+        if (trackingEvents) {
+            this.trackingEvents = trackingEvents;
+        }
+        return this.trackingEvents;
+    },
+    bundles: function(bundles) {
+        if (bundles) {
+            this.bundles = bundles;
+        }
+        return this.bundles;
+    },
     getBundleData: function(pageScriptUrls, onLoad) {
         const responses = [];
 

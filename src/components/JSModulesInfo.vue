@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import bundles from '../bundles';
     import Alert from './Alert.vue'
     import BundleListing from './BundleListing.vue'
     import Raw from './Raw.vue'
@@ -63,6 +64,10 @@
             };
 
             this.loadJsModulesInfo(function (jsModulesInfo) {
+                if (jsModulesInfo) {
+                    bundles.trackingEvents(jsModulesInfo.trackingEvents);
+                    bundles.bundles(jsModulesInfo.bundles);
+                }
                 data.jsModulesInfo = jsModulesInfo;
             });
 
