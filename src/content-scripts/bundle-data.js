@@ -1,4 +1,4 @@
-import jsmodules from '../jsmodules';
+import bundles from '../bundles';
 import message from '../messaging';
 
 const scripts = [];
@@ -22,7 +22,7 @@ for (var i = 0; i < sessionStorage.length; i++) {
     }
 }
 
-jsmodules.getBundleData(scripts, function (bundleInfo) {
+bundles.getBundleData(scripts, function (bundleInfo) {
     // Send them to the panel.
     message.sendMessageToPanel('bundle-data', {
         bundles: bundleInfo,

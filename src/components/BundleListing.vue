@@ -29,7 +29,7 @@
 
 <script>
     import BundleDetail from './BundleDetail.vue';
-    import jsmodules from '../jsmodules';
+    import bundles from '../bundles';
 
     function sortByTime(trackingEventList) {
         trackingEventList.sort(function (event1, event2) {
@@ -60,7 +60,7 @@
                 const bundleExportEvents = this.trackingEvents.filter(function (trackingEvent) {
                     return (trackingEvent.event === 'export' && trackingEvent.bundleId === bundleId);
                 });
-                const bundleDetails = jsmodules.findBundleByScriptPath(bundleLoadEvent.bundlePath, this.bundles);
+                const bundleDetails = bundles.findBundleByScriptPath(bundleLoadEvent.bundlePath, this.bundles);
 
                 this.bundle = {
                     loadEvent: bundleLoadEvent,
