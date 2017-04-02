@@ -50,8 +50,8 @@
         <div id="moduleDefs">
             <div class="form-inline filter">
                 <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="setTextFilter(moduleDefsFilter)" />
-                <input class="checkbox" type="checkbox" v-model="showBundledModules" @change="setShowBundledFilter(showBundledModules)" /> Bundled
-                <input class="checkbox" type="checkbox" v-model="showImportedModules" @change="setShowImportedFilter(showImportedModules)" /> Imported
+                <span title="Show modules whose code is inlined/bundled in the bundle"><input class="checkbox" type="checkbox" v-model="showBundledModules" @change="setShowBundledFilter(showBundledModules)" /> Inlined</span>
+                <span title="Show modules whose code is imported from another bundle (not inlined)"><input class="checkbox" type="checkbox" v-model="showImportedModules" @change="setShowImportedFilter(showImportedModules)" /> Imported</span>
             </div>
             <div v-for="moduleDefInst in filteredModuleDefs">
                 <ModuleDef :moduleDef="moduleDefInst"></ModuleDef>

@@ -11,9 +11,9 @@
                     </td>
                 </tr>
                 <tr v-if="moduleDef.stubbed">
-                    <td title="This module is imported from another bundle">Imported from</td>
+                    <td title="This module is imported from another bundle i.e. its code is not inlined in this bundle.">Imported from</td>
                     <td>
-                        <code>{{importedFrom}}</code>
+                        <code>{{importedFrom}}</code> <span title="The bundle that exports the module being imported">(via bundle <span class="export-bundle">{{importSatisfiedBy}}</span>)</span>
                     </td>
                 </tr>
             </table>
@@ -25,6 +25,7 @@
 <script>
     import _s from 'underscore.string';
     import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
+    import bundles from '../bundles';
 
     export default {
         props: {
@@ -47,6 +48,12 @@
                     return `${moduleSpec.moduleName}@${moduleSpec.moduleVersion}`;
                 }
                 return undefined;
+            },
+            importSatisfiedBy: function() {
+                if (this.moduleDef.stubbed) {
+                    return bundles.whoExports(this.moduleDef.stubbed.importModule);
+                }
+                return undefined;
             }
         },
         methods: {
@@ -56,12 +63,16 @@
 
 <style>
     .moduleDef #overview-table td:first-child {
-        width: 150px;
+        width: 130px;
         padding-right: 10px;
         font-weight: bold;
     }
 
-    .hint {
-        opacity: 0.5;
+    .export-bundle {
+        color: #0275d8;
+    }
+    .export-bundle:hover {
+        cursor: pointer;
+        text-decoration: underline;
     }
 </style>

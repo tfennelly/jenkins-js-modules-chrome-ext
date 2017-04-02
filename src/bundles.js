@@ -18,6 +18,17 @@ export default {
         }
         return this.bundles;
     },
+    whoExports: function (moduleName) {
+        for (let i = 0; i < this.trackingEvents.length; i++) {
+            const trackingEvent = this.trackingEvents[i];
+            if (trackingEvent.event === 'export') {
+                if (moduleName === trackingEvent.moduleId) {
+                    return trackingEvent.bundleId;
+                }
+            }
+        }
+        return undefined;
+    },
     getBundleData: function(pageScriptUrls, onLoad) {
         const responses = [];
 
