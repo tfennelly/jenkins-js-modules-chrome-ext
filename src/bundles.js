@@ -29,6 +29,12 @@ export default {
         }
         return undefined;
     },
+    setBundleListingComponent: function(bundleListingComponent) {
+        this.bundleListingComponent = bundleListingComponent;
+    },
+    showBundle: function(bundleId) {
+        this.bundleListingComponent.selectBundle(bundleId);
+    },
     getBundleData: function(pageScriptUrls, onLoad) {
         const responses = [];
 

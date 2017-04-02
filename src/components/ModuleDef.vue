@@ -13,7 +13,7 @@
                 <tr v-if="moduleDef.stubbed">
                     <td title="This module is imported from another bundle i.e. its code is not inlined in this bundle.">Imported from</td>
                     <td>
-                        <code>{{importedFrom}}</code> <span title="The bundle that exports the module being imported">(via bundle <span class="export-bundle">{{importSatisfiedBy}}</span>)</span>
+                        <code>{{importedFrom}}</code> <span title="The bundle that exports the module being imported">(via bundle <span class="export-bundle" @click="showBundle(importSatisfiedBy)">{{importSatisfiedBy}}</span>)</span>
                     </td>
                 </tr>
             </table>
@@ -57,6 +57,11 @@
             }
         },
         methods: {
+            showBundle: function(bundleId) {
+                if (bundleId) {
+                    bundles.showBundle(bundleId);
+                }
+            }
         }
     }
 </script>

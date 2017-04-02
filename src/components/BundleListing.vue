@@ -79,6 +79,11 @@
         },
         computed: {
             loadEvents: function() {
+                // Set this component in the bundles module.
+                // Seems like it's the wrong place to do it,
+                // but not sure what the right way is.
+                bundles.setBundleListingComponent(this);
+
                 const loadEvents = this.trackingEvents.filter(function (trackingEvent) {
                     return trackingEvent.event === 'load';
                 });
