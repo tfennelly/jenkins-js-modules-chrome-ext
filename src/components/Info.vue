@@ -1,8 +1,8 @@
 <template>
     <div class="info">
-        <b-popover triggers="hover">
+        <b-popover :triggers="trigger" :placement="placement">
             <b-button size="sm" variant="outline-success">
-                <i class="fa fa-info"></i>
+                <i class="fa fa-info"></i><span v-if="label">: {{label}}</span>
             </b-button>
             <span slot="content">
                 <slot></slot>
@@ -13,6 +13,17 @@
 
 <script>
     export default {
+        props: {
+            label: String,
+            trigger: {
+                type: String,
+                default: 'hover'
+            },
+            placement: {
+                type: String,
+                default: 'top'
+            }
+        }
     }
 </script>
 
