@@ -4,7 +4,7 @@
             <legend>{{trimmedModuleName}}</legend>
             <table id="overview-table">
                 <tr>
-                    <td title="The NPM package from which the module was bundled">NPM Package</td>
+                    <td title="The NPM package from which the module was bundled">From NPM Package</td>
                     <td>
                         <code>{{moduleDef.packageInfo.name}}@{{moduleDef.packageInfo.version}}</code>
                         <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
@@ -68,9 +68,10 @@
 
 <style>
     .moduleDef #overview-table td:first-child {
-        width: 130px;
+        width: 150px;
         padding-right: 10px;
         font-weight: bold;
+        opacity: 0.6;
     }
 
     .export-bundle {

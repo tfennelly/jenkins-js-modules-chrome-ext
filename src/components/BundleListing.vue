@@ -3,6 +3,10 @@
         <table>
             <tr>
                 <td class="list">
+                    <Info trigger="click" label="What's a JavaScript bundle?">
+                        <a href="https://github.com/jenkinsci/js-modules/blob/master/FAQs.md#what-is-the-difference-between-a-module-and-a-bundle" target="_blank">See the <code>js-modules</code> FAQ</a>.
+                    </Info>
+                    <p/>
                     <div class="loaded">
                         <div :class="bundleNameClasses(trackingEvent)" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
                     </div>

@@ -20,21 +20,34 @@
                 <td><code>{{decoded.jsBuilderVer}}</code></td>
             </tr>
             <tr v-if="decoded.hpiPluginId">
-                <td>Loaded from</td>
+                <td>Loaded From</td>
                 <td>{{decoded.hpiPluginId}}</td>
             </tr>
             <tr>
-                <td># modules</td>
+                <td>Module Count</td>
                 <td>{{numModules(decoded.moduleDefs)}}</td>
             </tr>
         </table>
 
         <div class="jump-tos">
             <div><a href="#import-export-heading">Import/Export</a></div>
-            <div><a href="#modules-heading">Bundled Module Listing</a></div>
+            <div><a href="#modules-heading">Module Listing</a></div>
         </div>
 
         <h4 id="import-export-heading">Import/Export</h4>
+        The NPM packages that are imported and exported to/from this JavaScript bundle i.e. <code>{{bundle.loadEvent.bundleId}}</code>.
+        <Info placement="left">
+            The list of import/export packages is important when trying to determine the dependencies between different bundles.
+            Imports and Exports allow bundles to collaborate at runtime by sharing JavaScript modules, which can be important for a number of reasons e.g.
+            <ul>
+                <li>
+                    Where it's mandatory to only have a single instance of a module loaded across all bundles (e.g. <code>react</code>).</li>
+                <li>
+                    Where a package (and its modules) has a large footprint and would result in a large increase in the overall JavaScript loading profile if every bundle included
+                    these modules. Exporting from one bundle and importing into others (and so not including) can help with this.
+                </li>
+            </ul>
+        </Info>
         <table id="export-import">
             <thead>
                 <th>Imports</th>
@@ -46,7 +59,17 @@
             </tr>
         </table>
 
-        <h4 id="modules-heading">Bundled Module Listing</h4>
+        <h4 id="modules-heading">Module Listing</h4>
+        The list of CommonJS modules that are included in this JavaScript bundle i.e. <code>{{bundle.loadEvent.bundleId}}</code>. Note that module code can be "inlined" or "imported".
+        <Info placement="left">
+            By default, bundles are generated such that all module code is "inlined" into the bundle.
+            <p/>
+            However, <code>js-modules</code> supports the ability to share module code between bundles via module import/export as defined in the bundle definition
+            (see <a href="#export-import">Import/Export</a> section above).
+            <p/>
+            Use the filtering options to see which modules are inlined or imported.
+        </Info>
+
         <div id="moduleDefs">
             <div class="form-inline filter">
                 <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="setTextFilter(moduleDefsFilter)" />
@@ -191,8 +214,10 @@
         margin: 20px 0px;
     }
     .bundleDetail #overview-table td:first-child {
+        width: 130px;
         padding-right: 10px;
         font-weight: bold;
+        opacity: 0.6;
     }
 
     #export-import {
