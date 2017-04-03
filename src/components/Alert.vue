@@ -5,7 +5,7 @@ dismiss button, which displays screwed up in the dev tools as something like "A~
 <template>
     <div :class="alertClasses" role="alert" v-if="!dismiss">
         <button v-if="dismissible" type="button" class="close" data-dismiss="alert" aria-label="Close" @click="dismiss=true">
-            <span aria-hidden="true">x</span>
+            <i class="fa fa-times" aria-hidden="true"></i>
         </button>
         <slot></slot>
     </div>
@@ -31,7 +31,7 @@ dismiss button, which displays screwed up in the dev tools as something like "A~
 </script>
 
 <style>
-    .alert-dismissible button span {
+    .alert-dismissible button i {
         font-size: 1.3rem;
         vertical-align: top;
     }
