@@ -17,7 +17,7 @@
             label: String,
             trigger: {
                 type: String,
-                default: 'hover'
+                default: 'click'
             },
             placement: {
                 type: String,
