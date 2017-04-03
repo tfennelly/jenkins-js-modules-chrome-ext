@@ -3,17 +3,17 @@
         <fieldset>
             <legend>{{trimmedModuleName}}</legend>
             <table id="overview-table">
-                <tr>
-                    <td title="The NPM package from which the module was bundled">From NPM Package</td>
+                <tr v-if="moduleDef.stubbed">
+                    <td title="This module is imported from another bundle i.e. its code is not inlined in this bundle.">Imported From</td>
+                    <td>
+                        <code>{{importedFrom}}</code>, <span title="The bundle that exports the module being imported">which is exported by the <span class="export-bundle" @click="showBundle(importSatisfiedBy)">{{importSatisfiedBy}}</span> bundle</span>
+                    </td>
+                </tr>
+                <tr v-else>
+                    <td title="The NPM package from which the module code was inlined">Inlined From</td>
                     <td>
                         <code>{{moduleDef.packageInfo.name}}@{{moduleDef.packageInfo.version}}</code>
                         <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
-                    </td>
-                </tr>
-                <tr v-if="moduleDef.stubbed">
-                    <td title="This module is imported from another bundle i.e. its code is not inlined in this bundle.">Imported from</td>
-                    <td>
-                        <code>{{importedFrom}}</code> <span title="The bundle that exports the module being imported">(via bundle <span class="export-bundle" @click="showBundle(importSatisfiedBy)">{{importSatisfiedBy}}</span>)</span>
                     </td>
                 </tr>
             </table>
