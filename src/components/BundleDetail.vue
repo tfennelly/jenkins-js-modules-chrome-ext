@@ -27,6 +27,10 @@
                 <td>Module Count</td>
                 <td>{{numModules(decoded.moduleDefs)}}</td>
             </tr>
+            <tr>
+                <td>Source size</td>
+                <td>{{moduleSize(decoded.moduleDefs)}}</td>
+            </tr>
         </table>
 
         <div class="jump-tos">
@@ -115,6 +119,15 @@
                     }
                 }
                 return count;
+            },
+            moduleSize: function(moduleDefs) {
+                let size = 0;
+                for (const moduleName in moduleDefs) {
+                    if (moduleDefs.hasOwnProperty(moduleName)) {
+                        size += moduleDefs[moduleName].size;
+                    }
+                }
+                return size;
             },
             setTextFilter: function(moduleDefsFilter) {
                 this.textFilter = moduleDefsFilter;
