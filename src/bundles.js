@@ -14,6 +14,11 @@ export default {
     },
     bundles: function(bundles) {
         if (bundles) {
+            bundles.forEach(function(bundle) {
+                if (bundle.status >= 200 && bundle.status < 300) {
+                    bundle.decoded = JSON.parse(bundle.data);
+                }
+            });
             this.bundles = bundles;
         }
         return this.bundles;

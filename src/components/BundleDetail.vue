@@ -97,9 +97,6 @@
     import ModuleDef from './ModuleDef.vue';
 
     function getDecodedBundle() {
-        if (!this.bundle.bundleDetails.decoded) {
-            this.bundle.bundleDetails.decoded = JSON.parse(this.bundle.bundleDetails.data);
-        }
         return this.bundle.bundleDetails.decoded;
     }
 
