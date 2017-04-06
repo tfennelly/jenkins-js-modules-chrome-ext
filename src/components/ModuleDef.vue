@@ -16,6 +16,12 @@
                         <span v-if="npmPackageRepo">(<a :href="npmPackageRepo" target="_blank">repo</a>)</span>
                     </td>
                 </tr>
+                <tr>
+                    <td title="Source code size">Source size</td>
+                    <td>
+                        {{moduleDef.size}}
+                    </td>
+                </tr>
             </table>
         </fieldset>
 
