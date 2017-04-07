@@ -5,6 +5,17 @@
 import $ from 'jquery';
 import _s from 'underscore.string';
 
+function processBundleData(bundle) {
+    const decoded = bundle.decoded = JSON.parse(bundle.data);
+
+    decoded.size = 0;
+    for (const moduleName in decoded.moduleDefs) {
+        if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
+            decoded.size += decoded.moduleDefs[moduleName].size;
+        }
+    }
+}
+
 export default {
     trackingEvents: function(trackingEvents) {
         if (trackingEvents) {
@@ -16,7 +27,7 @@ export default {
         if (bundles) {
             bundles.forEach(function(bundle) {
                 if (bundle.status >= 200 && bundle.status < 300) {
-                    bundle.decoded = JSON.parse(bundle.data);
+                    processBundleData(bundle);
                 }
             });
             this.bundles = bundles;

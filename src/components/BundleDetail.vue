@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>Source size</td>
-                <td>{{moduleSize(decoded.moduleDefs)}}</td>
+                <td>{{decoded.size}}</td>
             </tr>
         </table>
 
@@ -116,15 +116,6 @@
                     }
                 }
                 return count;
-            },
-            moduleSize: function(moduleDefs) {
-                let size = 0;
-                for (const moduleName in moduleDefs) {
-                    if (moduleDefs.hasOwnProperty(moduleName)) {
-                        size += moduleDefs[moduleName].size;
-                    }
-                }
-                return size;
             },
             setTextFilter: function(moduleDefsFilter) {
                 this.textFilter = moduleDefsFilter;
