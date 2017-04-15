@@ -6,6 +6,7 @@
         -->
         <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="/panel.css" rel="stylesheet" type="text/css" />
 
         <!--
         And the component will go in the slot.

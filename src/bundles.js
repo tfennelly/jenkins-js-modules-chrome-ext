@@ -9,9 +9,26 @@ function processBundleData(bundle) {
     const decoded = bundle.decoded = JSON.parse(bundle.data);
 
     decoded.size = 0;
+    decoded.packages = {};
+
     for (const moduleName in decoded.moduleDefs) {
         if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
-            decoded.size += decoded.moduleDefs[moduleName].size;
+            const moduleDef = decoded.moduleDefs[moduleName];
+            const packageInfo = moduleDef.packageInfo;
+
+            decoded.size += moduleDef.size;
+            let aPackage = decoded.packages[packageInfo.name];
+
+            if (!aPackage) {
+                aPackage = {
+                    versions: []
+                };
+                decoded.packages[packageInfo.name] = aPackage;
+            }
+
+            if (aPackage.versions[packageInfo.version] === -1) {
+                aPackage.versions.push(packageInfo.version);
+            }
         }
     }
 }

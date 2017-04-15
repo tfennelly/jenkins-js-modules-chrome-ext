@@ -35,11 +35,11 @@
 
         <div class="jump-tos">
             <div><a href="#import-export-heading">Import/Export</a></div>
+            <div><a href="#packages-heading">Package Listing</a></div>
             <div><a href="#modules-heading">Module Listing</a></div>
         </div>
 
         <h4 id="import-export-heading">Import/Export</h4>
-        The NPM packages that are imported and exported to/from this JavaScript bundle i.e. <code>{{bundle.loadEvent.bundleId}}</code>.
         <Info placement="left">
             The list of import/export packages is important when trying to determine the dependencies between different bundles.
             Imports and Exports allow bundles to collaborate at runtime by sharing JavaScript modules, which can be important for a number of reasons e.g.
@@ -52,6 +52,9 @@
                 </li>
             </ul>
         </Info>
+        The following is a list of NPM packages that are <span class="hint" title="Whose package main/entry module is imported from another bundle (that exported it), allowing this bundle avoid the overhead of including that code. In this case, the bundle entry for the module only contains a js-modules import instruction Vs the full module source.">imported</span> and
+        <span class="hint" title="Whose package main/entry module is exported from this bundle, allowing other bundles to import it i.e. allowing them to avoid the overhead of bundling that code.">exported</span> to/from this JavaScript bundle.
+        See the <a href="#packages-heading">Package Listing</a> section for the <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported.">complete</span> list of NPM packages used in this bundle.
         <table id="export-import">
             <thead>
                 <th>Imports</th>
@@ -63,16 +66,24 @@
             </tr>
         </table>
 
+        <h4 id="packages-heading">Package Listing</h4>
+        The following is a <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported (see previous section).">complete</span> list of all NPM packages used in this bundle.
+        <div id="bundle-package-listing">
+            <span class="bundle-package"></span>
+        </div>
+
         <h4 id="modules-heading">Module Listing</h4>
-        The list of CommonJS modules that are included in this JavaScript bundle i.e. <code>{{bundle.loadEvent.bundleId}}</code>. Note that module code can be "inlined" or "imported".
         <Info placement="left">
-            By default, bundles are generated such that all module code is "inlined" into the bundle.
+            By default, bundles are generated such that all module code is "inlined" into the bundle i.e. the bundle entry for each module contains the full source for the module.
             <p/>
-            However, <code>js-modules</code> supports the ability to share module code between bundles via module import/export as defined in the bundle definition
+            However, <code>js-modules</code> supports the ability to share module code between bundles via module import/export instructions defined in the bundle definition
             (see <a href="#export-import">Import/Export</a> section above).
             <p/>
             Use the filtering options to see which modules are inlined or imported.
         </Info>
+        The following is a list of CommonJS modules that are included in this JavaScript bundle. Note that module code can be either
+        <span class="hint" title="The bundle entry for the module contains the full JavaScript source of the module i.e. the default Browserify bundling behaviour.">inlined</span>
+        or <span class="hint" title="The bundle entry for the module contains just a js-modules import instruction i.e. the runtime code is coming from js-modules and is not included in the bundle entry. The code is being &quot;imported&quot; from another bundle.">imported</span>.
 
         <div id="moduleDefs">
             <div class="form-inline filter">
@@ -204,15 +215,19 @@
         padding: 10px;
     }
 
+    h4 {
+        padding-top: 20px;
+    }
+
     .bundleDetail .jump-tos {
         border: solid 1px #d3d3d3;
         border-radius: 3px;
         padding: 10px 10px;
-        margin-bottom: 20px;
+        margin-top: 20px;
     }
 
     .bundleDetail table {
-        margin: 20px 0px;
+        margin-top: 20px;
     }
     .bundleDetail #overview-table td:first-child {
         width: 130px;
