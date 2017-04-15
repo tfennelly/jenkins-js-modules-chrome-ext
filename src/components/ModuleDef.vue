@@ -6,7 +6,7 @@
                 <tr v-if="moduleDef.stubbed">
                     <td title="This module is imported from another bundle i.e. its code is not inlined in this bundle.">Imported From</td>
                     <td>
-                        <code>{{importedFrom}}</code>, <span title="The bundle that exports the module being imported">which is exported by the <span class="export-bundle" @click="showBundle(importSatisfiedBy)">{{importSatisfiedBy}}</span> bundle</span>
+                        <code>{{importedFrom}}</code>, <span title="The bundle that exports the module being imported">which is exported by the <BundleLink :whoExports="moduleDef.stubbed.importModule" /> bundle</span>
                     </td>
                 </tr>
                 <tr v-else>
@@ -31,7 +31,6 @@
 <script>
     import _s from 'underscore.string';
     import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
-    import bundles from '../bundles';
 
     export default {
         props: {
@@ -54,19 +53,6 @@
                     return `${moduleSpec.moduleName}@${moduleSpec.moduleVersion}`;
                 }
                 return undefined;
-            },
-            importSatisfiedBy: function() {
-                if (this.moduleDef.stubbed) {
-                    return bundles.whoExports(this.moduleDef.stubbed.importModule);
-                }
-                return undefined;
-            }
-        },
-        methods: {
-            showBundle: function(bundleId) {
-                if (bundleId) {
-                    bundles.showBundle(bundleId);
-                }
             }
         }
     }
@@ -78,13 +64,5 @@
         padding-right: 10px;
         font-weight: bold;
         opacity: 0.6;
-    }
-
-    .export-bundle {
-        color: #0275d8;
-    }
-    .export-bundle:hover {
-        cursor: pointer;
-        text-decoration: underline;
     }
 </style>

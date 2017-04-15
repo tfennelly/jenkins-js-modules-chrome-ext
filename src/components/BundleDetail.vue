@@ -61,7 +61,7 @@
                 <th>Exports</th>
             </thead>
             <tr>
-                <td><div class="moduleName" v-for="importedModule in imports"><code>{{importedModule}}</code></div></td>
+                <td><div class="moduleName" v-for="importedModule in imports"><code>{{importedModule}}</code> (from <BundleLink :whoExports="importedModule" />)</div></td>
                 <td><div class="moduleName" v-for="exportEvent in exports"><code>{{exportEvent.moduleSpec.moduleName}}@{{exportEvent.moduleSpec.moduleVersion}}</code></div></td>
             </tr>
         </table>

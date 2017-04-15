@@ -1,5 +1,5 @@
 <template>
-    <span class="export-bundle" @click="showBundle()">{{bundleName}}</span>
+    <span class="export-bundle" @click="showBundle()" :title="title">{{bundleName}}</span>
 </template>
 
 <script>
@@ -18,6 +18,12 @@
                     return bundles.whoExports(this.whoExports);
                 }
                 return undefined;
+            },
+            title: function() {
+                if (this.whoExports) {
+                    return `The bundle that exports ${this.whoExports}.`;
+                }
+                return '';
             }
         },
         methods: {
