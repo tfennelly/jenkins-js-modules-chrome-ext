@@ -83,7 +83,7 @@
             <p/>
             Use the filtering options to see which modules are inlined or imported.
         </Info>
-        The following is a list of CommonJS modules that are included in this JavaScript bundle. Note that module code can be either
+        The following is a list of CommonJS modules that are included (from <a href="#packages-heading">the above listed NPM packages</a>) in this JavaScript bundle. Note that module code can be either
         <span class="hint" title="The bundle entry for the module contains the full JavaScript source of the module i.e. the default Browserify bundling behaviour.">inlined</span>
         or <span class="hint" title="The bundle entry for the module contains just a js-modules import instruction i.e. the runtime code is coming from js-modules and is not included in the bundle entry. The code is being &quot;imported&quot; from another bundle.">imported</span>.
 
