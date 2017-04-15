@@ -4,6 +4,7 @@
 
 import $ from 'jquery';
 import _s from 'underscore.string';
+import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
 
 function processBundleData(bundle) {
     const decoded = bundle.decoded = JSON.parse(bundle.data);
@@ -52,10 +53,13 @@ export default {
         return this.bundles;
     },
     whoExports: function (moduleName) {
+        const moduleSpec = new ModuleSpec(moduleName);
+        const importAs = moduleSpec.importAs();
+
         for (let i = 0; i < this.trackingEvents.length; i++) {
             const trackingEvent = this.trackingEvents[i];
             if (trackingEvent.event === 'export') {
-                if (moduleName === trackingEvent.moduleId) {
+                if (importAs === trackingEvent.moduleId) {
                     return trackingEvent.bundleId;
                 }
             }
