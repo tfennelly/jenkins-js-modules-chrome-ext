@@ -67,10 +67,12 @@
         </table>
 
         <h4 id="packages-heading">Package Listing</h4>
-        The following is a <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported (see previous section).">complete</span> list of all NPM packages used in this bundle.
+        The following is a <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported (see previous section).">complete</span> list of all NPM packages <span class="hint" title="Where the bundle bundles CommonJS modules from the NPM package.">used</span> in this bundle.
         <div id="bundle-package-listing">
             <div class="bundle-package" v-for="package in decoded.packages"><code>{{package.name}}</code></div>
         </div>
+
+        See the <a href="#modules-heading">Module Listing</a> section for a breakdown of the individual CommonJS modules being bundled from these NPM packages.
 
         <h4 id="modules-heading">Module Listing</h4>
         <Info placement="left">
@@ -237,7 +239,7 @@
     }
 
     #bundle-package-listing {
-        margin-top: 10px;
+        margin: 10px 0 10px 0;
         display: inline-block;
     }
     .bundle-package {
