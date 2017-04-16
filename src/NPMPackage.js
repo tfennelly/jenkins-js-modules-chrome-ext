@@ -3,6 +3,7 @@ export default class NPMPackage {
 
     versions = [];
     size = 0;
+    moduleDefs = [];
 
     constructor(name) {
         this.name = name;
@@ -14,7 +15,8 @@ export default class NPMPackage {
         }
     }
 
-    incSize(numChars) {
-        this.size += numChars;
+    addModuleDef(moduleDef) {
+        this.size += moduleDef.size;
+        this.moduleDefs.push(moduleDef);
     }
 }

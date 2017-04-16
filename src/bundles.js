@@ -21,7 +21,7 @@ function processBundleData(bundle) {
 
             const dPackage = decoded.packageList.getPackage(packageInfo.name);
             dPackage.addVersion(packageInfo.version);
-            dPackage.incSize(moduleDef.size);
+            dPackage.addModuleDef(moduleDef);
         }
     }
 }
