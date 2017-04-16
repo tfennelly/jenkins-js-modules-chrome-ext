@@ -5,7 +5,7 @@ export default class NPMPackageList {
     packages = [];
     size = 0;
 
-    package(name) {
+    getPackage(name) {
         for (let i = 0; i < this.packages.length; i++) {
             if (this.packages[i].name === name) {
                 return this.packages[i];

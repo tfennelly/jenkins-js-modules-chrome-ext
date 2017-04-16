@@ -17,7 +17,7 @@ function processBundleData(bundle) {
             const moduleDef = decoded.moduleDefs[moduleName];
             const packageInfo = moduleDef.packageInfo;
 
-            const dPackage = decoded.packageList.package(packageInfo.name);
+            const dPackage = decoded.packageList.getPackage(packageInfo.name);
             dPackage.addVersion(packageInfo.version);
 
             decoded.packageList.incSize(moduleDef.size);
