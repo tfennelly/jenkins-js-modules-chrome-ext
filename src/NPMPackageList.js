@@ -5,11 +5,15 @@ export default class NPMPackageList {
     packages = [];
     size = 0;
 
-    getPackage(name) {
+    getPackage(name, add = false) {
         for (let i = 0; i < this.packages.length; i++) {
             if (this.packages[i].name === name) {
                 return this.packages[i];
             }
+        }
+
+        if (!add) {
+            return undefined;
         }
 
         const dPackage = new NPMPackage(name);

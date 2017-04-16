@@ -19,7 +19,7 @@ function processBundleData(bundle) {
 
             decoded.packageList.incSize(moduleDef.size);
 
-            const dPackage = decoded.packageList.getPackage(packageInfo.name);
+            const dPackage = decoded.packageList.getPackage(packageInfo.name, true);
             dPackage.addVersion(packageInfo.version);
             dPackage.addModuleDef(moduleDef);
         }
