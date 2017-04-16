@@ -5,20 +5,13 @@
 import $ from 'jquery';
 import _s from 'underscore.string';
 import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
+import NPMPackageList from './NPMPackageList';
 
 function processBundleData(bundle) {
     const decoded = bundle.decoded = JSON.parse(bundle.data);
 
     decoded.size = 0;
-    decoded.packages = [];
-    decoded.findPackageInfo = function(packageName) {
-        for (let i = 0; i < decoded.packages.length; i++) {
-            if (decoded.packages[i].name === packageName) {
-                return decoded.packages[i];
-            }
-        }
-        return undefined;
-    };
+    decoded.packageList = new NPMPackageList();
 
     for (const moduleName in decoded.moduleDefs) {
         if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
@@ -26,19 +19,8 @@ function processBundleData(bundle) {
             const packageInfo = moduleDef.packageInfo;
 
             decoded.size += moduleDef.size;
-            let aPackage = decoded.findPackageInfo(packageInfo.name);
-
-            if (!aPackage) {
-                aPackage = {
-                    name: packageInfo.name,
-                    versions: []
-                };
-                decoded.packages.push(aPackage);
-            }
-
-            if (aPackage.versions[packageInfo.version] === -1) {
-                aPackage.versions.push(packageInfo.version);
-            }
+            const dPackage = decoded.packageList.package(packageInfo.name);
+            dPackage.addVersion(packageInfo.version);
         }
     }
 }
