@@ -17,10 +17,10 @@ function processBundleData(bundle) {
             const moduleDef = decoded.moduleDefs[moduleName];
             const packageInfo = moduleDef.packageInfo;
 
+            decoded.packageList.incSize(moduleDef.size);
+
             const dPackage = decoded.packageList.getPackage(packageInfo.name);
             dPackage.addVersion(packageInfo.version);
-
-            decoded.packageList.incSize(moduleDef.size);
             dPackage.incSize(moduleDef.size);
         }
     }
