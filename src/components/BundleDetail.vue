@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>Source size</td>
-                <td>{{decoded.size}}</td>
+                <td>{{decoded.packageList.size}}</td>
             </tr>
         </table>
 

@@ -3,6 +3,7 @@ import NPMPackage from './NPMPackage';
 export default class NPMPackageList {
 
     packages = [];
+    size = 0;
 
     package(name) {
         for (let i = 0; i < this.packages.length; i++) {
@@ -16,4 +17,7 @@ export default class NPMPackageList {
 
         return dPackage;
     }
-}
+
+    incSize(numChars) {
+        this.size += numChars;
+    }}

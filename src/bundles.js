@@ -10,7 +10,6 @@ import NPMPackageList from './NPMPackageList';
 function processBundleData(bundle) {
     const decoded = bundle.decoded = JSON.parse(bundle.data);
 
-    decoded.size = 0;
     decoded.packageList = new NPMPackageList();
 
     for (const moduleName in decoded.moduleDefs) {
@@ -18,9 +17,11 @@ function processBundleData(bundle) {
             const moduleDef = decoded.moduleDefs[moduleName];
             const packageInfo = moduleDef.packageInfo;
 
-            decoded.size += moduleDef.size;
             const dPackage = decoded.packageList.package(packageInfo.name);
             dPackage.addVersion(packageInfo.version);
+
+            decoded.packageList.incSize(moduleDef.size);
+            dPackage.incSize(moduleDef.size);
         }
     }
 }
