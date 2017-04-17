@@ -1,6 +1,6 @@
 import NPMPackage from './NPMPackage';
 
-export default class NPMPackageList {
+export default class Bundle {
 
     packages = [];
     size = 0;

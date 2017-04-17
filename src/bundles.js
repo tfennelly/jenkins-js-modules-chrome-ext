@@ -5,21 +5,21 @@
 import $ from 'jquery';
 import _s from 'underscore.string';
 import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
-import NPMPackageList from './NPMPackageList';
+import Bundle from './Bundle';
 
 function processBundleData(bundle) {
     const decoded = bundle.decoded = JSON.parse(bundle.data);
 
-    decoded.packageList = new NPMPackageList();
+    decoded.bundle = new Bundle();
 
     for (const moduleName in decoded.moduleDefs) {
         if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
             const moduleDef = decoded.moduleDefs[moduleName];
             const packageInfo = moduleDef.packageInfo;
 
-            decoded.packageList.incSize(moduleDef.size);
+            decoded.bundle.incSize(moduleDef.size);
 
-            const dPackage = decoded.packageList.getPackage(packageInfo.name, true);
+            const dPackage = decoded.bundle.getPackage(packageInfo.name, true);
             dPackage.addVersion(packageInfo.version);
             dPackage.addModuleDef(moduleDef);
         }
