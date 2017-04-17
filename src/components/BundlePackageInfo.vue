@@ -1,6 +1,6 @@
 <template>
     <div class="bundle-package-info">
-        <b-popover :triggers="click" placement="left">
+        <b-popover triggers="click" placement="left">
             <code :class="versionsClassNames">{{dPackage.name}}</code>
             <span slot="content">
                 <table>
@@ -15,6 +15,10 @@
                     <tr>
                         <td>Source size</td>
                         <td>{{this.dPackage.size}}</td>
+                    </tr>
+                    <tr v-if="this.dPackage.importCount > 0">
+                        <td>Imported from</td>
+                        <td><BundleLink :whoExports="this.dPackage.importedFrom[0]" /></td>
                     </tr>
                 </table>
             </span>
@@ -64,5 +68,8 @@
         padding-right: 10px;
         font-weight: bold;
         opacity: 0.6;
+    }
+    .bundle-package-info .popover {
+        max-width: 400px;
     }
 </style>
