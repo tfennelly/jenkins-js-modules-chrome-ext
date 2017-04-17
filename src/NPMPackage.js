@@ -10,7 +10,7 @@ export default class NPMPackage {
     }
 
     addVersion(version) {
-        if (this.versions[version] === -1) {
+        if (this.versions.indexOf(version) === -1) {
             this.versions.push(version);
         }
     }

@@ -24,7 +24,7 @@
                 <td>{{decoded.hpiPluginId}}</td>
             </tr>
             <tr>
-                <td>Module Count</td>
+                <td>Module count</td>
                 <td>{{numModules(decoded.moduleDefs)}}</td>
             </tr>
             <tr>
@@ -69,7 +69,7 @@
         <h4 id="packages-heading">Package Listing</h4>
         The following is a <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported (see previous section).">complete</span> list of all NPM packages <span class="hint" title="Where the bundle bundles CommonJS modules from the NPM package.">used</span> in this bundle.
         <div id="bundle-package-listing">
-            <div class="bundle-package" v-for="package in decoded.bundle.packages"><code>{{package.name}}</code></div>
+            <div class="bundle-package" v-for="package in decoded.bundle.packages"><BundlePackageInfo :dPackage="package" /></div>
         </div>
 
         See the <a href="#modules-heading">Module Listing</a> section for a breakdown of the individual CommonJS modules being bundled from these NPM packages.
@@ -108,6 +108,7 @@
     import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
     import Version from '@jenkins-cd/js-modules/js/Version';
     import ModuleDef from './ModuleDef.vue';
+    import BundlePackageInfo from './BundlePackageInfo.vue';
 
     function getDecodedBundle() {
         return this.bundle.bundleDetails.decoded;
@@ -115,7 +116,7 @@
 
     export default {
         components: {
-            ModuleDef
+            ModuleDef, BundlePackageInfo
         },
         props: {
             bundle: Object
@@ -241,6 +242,7 @@
     #bundle-package-listing {
         margin: 10px 0 10px 0;
         display: inline-block;
+        width: 100%;
     }
     .bundle-package {
         padding: 3px 5px 3px 0;
