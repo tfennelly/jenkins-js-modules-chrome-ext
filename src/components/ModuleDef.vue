@@ -43,7 +43,11 @@
             npmPackageRepo: function() {
                 const packageInfo = this.moduleDef.packageInfo;
                 if (packageInfo.repository && packageInfo.repository.type === 'git') {
-                    return _s.ltrim(packageInfo.repository.url, 'git+');
+                    let repoUrl = _s.ltrim(packageInfo.repository.url, 'git+');
+                    if (repoUrl.startsWith('ssh://')) {
+                        repoUrl = 'https://' + _s.ltrim(repoUrl, 'ssh://');
+                    }
+                    return repoUrl;
                 }
                 return undefined;
             },
