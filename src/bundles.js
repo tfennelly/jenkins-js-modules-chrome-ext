@@ -89,7 +89,7 @@ export default {
             doGet(pageScriptUrls[i]);
         }
     },
-    findBundleByScriptPath: function(scriptPath, bundles) {
+    findBundleByScriptPath: function(scriptPath) {
         // The scriptPath set in the bundle load event can have build time
         // prefixes that we want to remove before using to check againts the
         // actual script URLs used in the page.
@@ -104,7 +104,7 @@ export default {
 
         // Now compare the scriptPath for a match against the end of the
         // scriptPaths as set on the bundles.
-        const filteredBundleList = bundles.filter(function(bundle) {
+        const filteredBundleList = this.bundles.filter(function(bundle) {
             return _s.endsWith(bundle.script, scriptPath);
         });
 

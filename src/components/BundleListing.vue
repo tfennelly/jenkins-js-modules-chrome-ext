@@ -64,7 +64,7 @@
                 const bundleExportEvents = this.trackingEvents.filter(function (trackingEvent) {
                     return (trackingEvent.event === 'export' && trackingEvent.bundleId === bundleId);
                 });
-                const bundleDetails = bundles.findBundleByScriptPath(bundleLoadEvent.bundlePath, this.bundles);
+                const bundleDetails = bundles.findBundleByScriptPath(bundleLoadEvent.bundlePath);
 
                 this.bundle = {
                     loadEvent: bundleLoadEvent,
