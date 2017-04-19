@@ -2,8 +2,13 @@ import NPMPackage from './NPMPackage';
 
 export default class Bundle {
 
+    bundleDetails = undefined;
     packages = [];
     size = 0;
+
+    constructor(bundleDetails) {
+        this.bundleDetails = bundleDetails;
+    }
 
     getPackage(name, add = false) {
         for (let i = 0; i < this.packages.length; i++) {

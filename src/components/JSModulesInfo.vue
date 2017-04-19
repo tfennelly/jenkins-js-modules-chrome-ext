@@ -65,8 +65,7 @@
 
             this.loadJsModulesInfo(function (jsModulesInfo) {
                 if (jsModulesInfo) {
-                    bundles.trackingEvents(jsModulesInfo.trackingEvents);
-                    bundles.bundles(jsModulesInfo.bundles);
+                    bundles.jsModulesInfo(jsModulesInfo);
                 }
                 data.jsModulesInfo = jsModulesInfo;
             });

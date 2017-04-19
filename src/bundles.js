@@ -7,42 +7,33 @@ import _s from 'underscore.string';
 import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
 import Bundle from './Bundle';
 
-function processBundleData(bundle) {
-    const decoded = bundle.decoded = JSON.parse(bundle.data);
-
-    decoded.bundle = new Bundle();
-
-    for (const moduleName in decoded.moduleDefs) {
-        if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
-            const moduleDef = decoded.moduleDefs[moduleName];
-            const packageInfo = moduleDef.packageInfo;
-
-            decoded.bundle.incSize(moduleDef.size);
-
-            const dPackage = decoded.bundle.getPackage(packageInfo.name, true);
-            dPackage.addVersion(packageInfo.version);
-            dPackage.addModuleDef(moduleDef);
-        }
-    }
-}
-
 export default {
-    trackingEvents: function(trackingEvents) {
-        if (trackingEvents) {
-            this.trackingEvents = trackingEvents;
-        }
-        return this.trackingEvents;
-    },
-    bundles: function(bundles) {
-        if (bundles) {
-            bundles.forEach(function(bundle) {
-                if (bundle.status >= 200 && bundle.status < 300) {
-                    processBundleData(bundle);
+    jsModulesInfo: function(jsModulesInfo) {
+        this.trackingEvents = jsModulesInfo.trackingEvents;
+        this.bundles = jsModulesInfo.bundles;
+
+        const self = this;
+        this.bundles.forEach(function(bundle) {
+            if (bundle.status >= 200 && bundle.status < 300) {
+                const decoded = bundle.decoded = JSON.parse(bundle.data);
+                const bundleDetails = self.findBundleByScriptPath(bundle.script);
+
+                decoded.bundle = new Bundle(bundleDetails);
+
+                for (const moduleName in decoded.moduleDefs) {
+                    if (decoded.moduleDefs.hasOwnProperty(moduleName)) {
+                        const moduleDef = decoded.moduleDefs[moduleName];
+                        const packageInfo = moduleDef.packageInfo;
+
+                        decoded.bundle.incSize(moduleDef.size);
+
+                        const dPackage = decoded.bundle.getPackage(packageInfo.name, true);
+                        dPackage.addVersion(packageInfo.version);
+                        dPackage.addModuleDef(moduleDef);
+                    }
                 }
-            });
-            this.bundles = bundles;
-        }
-        return this.bundles;
+            }
+        });
     },
     whoExports: function (moduleName) {
         const moduleSpec = new ModuleSpec(moduleName);
