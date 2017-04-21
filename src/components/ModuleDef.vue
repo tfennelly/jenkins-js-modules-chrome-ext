@@ -63,6 +63,9 @@
 </script>
 
 <style>
+    .moduleDef {
+        margin-bottom: 10px;
+    }
     .moduleDef #overview-table td:first-child {
         width: 150px;
         padding-right: 10px;

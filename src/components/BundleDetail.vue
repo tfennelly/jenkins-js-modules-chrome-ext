@@ -1,7 +1,7 @@
 <template>
     <div class="bundleDetail">
 
-        <h4>Overview</h4>
+        <h4 id="overview">Overview</h4>
         <table id="overview-table">
             <tr>
                 <td>ID</td>
@@ -215,11 +215,14 @@
 
 <style>
     .bundleDetail {
-        padding: 10px;
+        padding: 0 10px;
     }
 
     h4 {
         padding-top: 20px;
+    }
+    #overview {
+        padding-top: 0;
     }
 
     .bundleDetail .jump-tos {
@@ -229,9 +232,6 @@
         margin-top: 20px;
     }
 
-    .bundleDetail table {
-        margin-top: 20px;
-    }
     .bundleDetail #overview-table td:first-child {
         width: 130px;
         padding-right: 10px;
@@ -250,6 +250,7 @@
     }
 
     #export-import {
+        margin-top: 20px;
         width: 100%;
     }
     #export-import th {
