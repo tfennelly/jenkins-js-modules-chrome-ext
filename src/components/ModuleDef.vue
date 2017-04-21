@@ -72,4 +72,8 @@
         font-weight: bold;
         opacity: 0.6;
     }
+
+    .moduleDef legend {
+        font-size: 1.1rem;
+    }
 </style>
