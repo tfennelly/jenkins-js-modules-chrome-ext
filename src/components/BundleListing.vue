@@ -1,6 +1,6 @@
 <template>
     <div class="bundleListing">
-        {{setBundleListingComponent}}
+        {{setBundleListingComponent()}}
         <table>
             <tr>
                 <td class="list">
@@ -39,6 +39,11 @@
             bundleList: Object // Instance of BundleList
         },
         methods: {
+            setBundleListingComponent: function() {
+                // Total hack ... must be a better way of doing this.
+                bundles.setBundleListingComponent(this);
+                return '';
+            },
             selectBundle: function (bundleId) {
                 this.bundle = this.bundleList.getBundleById(bundleId);
                 if (!this.bundle) {
@@ -53,13 +58,6 @@
             return {
                 bundle: undefined
             };
-        },
-        computed: {
-            setBundleListingComponent: function() {
-                // Total hack ... must be a better way of doing this.
-                bundles.setBundleListingComponent(this);
-                return '';
-            }
         }
     }
 </script>
