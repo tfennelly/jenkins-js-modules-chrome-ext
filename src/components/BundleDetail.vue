@@ -5,31 +5,31 @@
         <table id="overview-table">
             <tr>
                 <td>ID</td>
-                <td><code>{{bundle.loadEvent.bundleId}}</code></td>
+                <td><code>{{bundle.bundleId}}</code></td>
             </tr>
             <tr>
                 <td>Script</td>
-                <td><code>{{bundle.bundleDetails.script}}</code></td>
+                <td><code>{{bundle.script}}</code></td>
             </tr>
             <tr>
                 <td>Created</td>
-                <td>{{new Date(decoded.created).toString()}}</td>
+                <td>{{new Date(bundle.created).toString()}}</td>
             </tr>
             <tr>
                 <td>js-builder</td>
-                <td><code>{{decoded.jsBuilderVer}}</code></td>
+                <td><code>{{bundle.jsBuilderVer}}</code></td>
             </tr>
-            <tr v-if="decoded.hpiPluginId">
+            <tr v-if="bundle.hpiPluginId">
                 <td>Loaded From</td>
-                <td>{{decoded.hpiPluginId}}</td>
+                <td>{{bundle.hpiPluginId}}</td>
             </tr>
             <tr>
                 <td>Module count</td>
-                <td>{{numModules(decoded.moduleDefs)}}</td>
+                <td>{{numModules(bundle.moduleDefs)}}</td>
             </tr>
             <tr>
                 <td>Source size</td>
-                <td>{{decoded.bundle.size}}</td>
+                <td>{{bundle.size}}</td>
             </tr>
         </table>
 
@@ -61,7 +61,7 @@
                 <th>Exports</th>
             </thead>
             <tr>
-                <td><div class="moduleName" v-for="importedModule in imports"><code>{{importedModule}}</code> (from <BundleLink :whoExports="importedModule" />)</div></td>
+                <td><div class="moduleName" v-for="importedModule in bundle.imports"><code>{{importedModule}}</code> (from <BundleLink :whoExports="importedModule" />)</div></td>
                 <td><div class="moduleName" v-for="exportEvent in exports"><code>{{exportEvent.moduleSpec.moduleName}}@{{exportEvent.moduleSpec.moduleVersion}}</code></div></td>
             </tr>
         </table>
@@ -69,7 +69,7 @@
         <h4 id="packages-heading">Package Listing</h4>
         The following is a <span class="hint" title="All packages used in the bundle i.e. not just those that were imported or exported (see previous section).">complete</span> list of all NPM packages <span class="hint" title="Where the bundle bundles CommonJS modules from the NPM package.">used</span> in this bundle.
         <div id="bundle-package-listing">
-            <div class="bundle-package" v-for="package in decoded.bundle.packages"><BundlePackageInfo :dPackage="package" /></div>
+            <div class="bundle-package" v-for="package in bundle.packages"><BundlePackageInfo :dPackage="package" /></div>
         </div>
 
         See the <a href="#modules-heading">Module Listing</a> section for a breakdown of the individual CommonJS modules being bundled from these NPM packages.
@@ -110,16 +110,12 @@
     import ModuleDef from './ModuleDef.vue';
     import BundlePackageInfo from './BundlePackageInfo.vue';
 
-    function getDecodedBundle() {
-        return this.bundle.bundleDetails.decoded;
-    }
-
     export default {
         components: {
             ModuleDef, BundlePackageInfo
         },
         props: {
-            bundle: Object
+            bundle: Object  // Instance of Bundle
         },
         methods: {
             numModules: function(moduleDefs) {
@@ -149,41 +145,16 @@
             }
         },
         computed: {
-            decoded: function() {
-                return getDecodedBundle.call(this);
-            },
             exports: function() {
-                return this.bundle.exportEvents.filter(function (exportEvent) {
-                    if (!exportEvent.moduleSpec) {
-                        exportEvent.moduleSpec = new ModuleSpec(exportEvent.moduleId);
-                        exportEvent.moduleVersion = (exportEvent.moduleSpec.moduleVersion && new Version(exportEvent.moduleSpec.moduleVersion));
-                    }
-                    return (exportEvent.moduleVersion && exportEvent.moduleVersion.isSpecific());
+                // Only show specific versions.
+                return this.bundle.exports.filter(function (moduleExport) {
+                    return (moduleExport.moduleVersion && moduleExport.moduleVersion.isSpecific());
                 });
-            },
-            imports: function() {
-                const imports = [];
-                const moduleDefs = this.decoded.moduleDefs;
-                for (const moduleName in moduleDefs) {
-                    if (moduleDefs.hasOwnProperty(moduleName)) {
-                        const moduleDef = moduleDefs[moduleName];
-                        if (moduleDef.stubbed) {
-                            if (!moduleDef.stubbed.moduleSpec) {
-                                moduleDef.stubbed.moduleSpec = new ModuleSpec(moduleDef.stubbed.importModule);
-                            }
-                            var importName = `${moduleDef.stubbed.moduleSpec.moduleName}@${moduleDef.stubbed.moduleSpec.moduleVersion}`;
-                            if (imports.indexOf(importName) === -1) {
-                                imports.push(importName);
-                            }
-                        }
-                    }
-                }
-                return imports;
             },
             filteredModuleDefs: function() {
                 const moduleDefsList = [];
 
-                const moduleDefs = getDecodedBundle.call(this).moduleDefs;
+                const moduleDefs = this.bundle.moduleDefs;
 
                 for (const moduleName in moduleDefs) {
                     if (moduleDefs.hasOwnProperty(moduleName)) {

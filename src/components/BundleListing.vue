@@ -1,5 +1,6 @@
 <template>
     <div class="bundleListing">
+        {{setBundleListingComponent}}
         <table>
             <tr>
                 <td class="list">
@@ -7,8 +8,8 @@
                         <a href="https://github.com/jenkinsci/js-modules/blob/master/FAQs.md#what-is-the-difference-between-a-module-and-a-bundle" target="_blank">See the <code>js-modules</code> FAQ</a>.
                     </Info>
                     <p/>
-                    <div class="loaded">
-                        <div :class="bundleNameClasses(trackingEvent)" v-for="trackingEvent in loadEvents" @click="selectBundle(trackingEvent.bundleId)">{{trackingEvent.bundleId}}</div>
+                    <div class="loaded" v-if="bundleList">
+                        <div :class="bundleNameClasses(bundle)" v-for="bundle in bundleList.bundles" @click="selectBundle(bundle.bundleId)">{{bundle.bundleId}}</div>
                     </div>
                 </td>
                 <td class="detail">
@@ -16,12 +17,7 @@
                         <b-badge>Select bundle in left panel</b-badge>
                     </div>
                     <div v-else>
-                        <div v-if="!bundle.bundleDetails">
-                            <b-alert state="danger" show>
-                                Hmmm something's not right here. We were unable to find a matching bundle for {{bundle.loadEvent.bundleId}}.
-                            </b-alert>
-                        </div>
-                        <div v-else>
+                        <div v-if="bundle">
                             <BundleDetail :bundle="bundle"></BundleDetail>
                         </div>
                     </div>
@@ -35,45 +31,22 @@
     import BundleDetail from './BundleDetail.vue';
     import bundles from '../bundles';
 
-    function sortByTime(trackingEventList) {
-        trackingEventList.sort(function (event1, event2) {
-            if (event1.at < event2.at) {
-                return -1;
-            } else if (event1.at === event2.at) {
-                return 0;
-            } else {
-                return 1;
-            }
-        });
-        return trackingEventList;
-    }
-
     export default {
         components: {
             BundleDetail
         },
         props: {
-            trackingEvents: Array,
-            bundles: Array
+            bundleList: Object // Instance of BundleList
         },
         methods: {
             selectBundle: function (bundleId) {
-                const bundleLoadEvent = this.trackingEvents.filter(function (trackingEvent) {
-                    return (trackingEvent.event === 'load' && trackingEvent.bundleId === bundleId);
-                })[0];
-                const bundleExportEvents = this.trackingEvents.filter(function (trackingEvent) {
-                    return (trackingEvent.event === 'export' && trackingEvent.bundleId === bundleId);
-                });
-                const bundleDetails = bundles.findBundleByScriptPath(bundleLoadEvent.bundlePath);
-
-                this.bundle = {
-                    loadEvent: bundleLoadEvent,
-                    exportEvents: bundleExportEvents,
-                    bundleDetails: bundleDetails
-                };
+                this.bundle = this.bundleList.getBundleById(bundleId);
+                if (!this.bundle) {
+                    console.error(`Unexpected error. Failed to find bundle "${bundleId}".`);
+                }
             },
-            bundleNameClasses: function(loadEvent) {
-                return `bundleName ${this.bundle && loadEvent.bundleId === this.bundle.loadEvent.bundleId ? 'selected' : ''}`;
+            bundleNameClasses: function(loadedBundle) {
+                return `bundleName ${this.bundle && loadedBundle.bundleId === this.bundle.bundleId ? 'selected' : ''}`;
             }
         },
         data () {
@@ -82,16 +55,10 @@
             };
         },
         computed: {
-            loadEvents: function() {
-                // Set this component in the bundles module.
-                // Seems like it's the wrong place to do it,
-                // but not sure what the right way is.
+            setBundleListingComponent: function() {
+                // Total hack ... must be a better way of doing this.
                 bundles.setBundleListingComponent(this);
-
-                const loadEvents = this.trackingEvents.filter(function (trackingEvent) {
-                    return trackingEvent.event === 'load';
-                });
-                return sortByTime(loadEvents);
+                return '';
             }
         }
     }

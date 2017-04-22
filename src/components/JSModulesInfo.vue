@@ -7,7 +7,7 @@
         </div>
         <b-tabs small>
             <b-tab title="Bundles">
-                <BundleListing :trackingEvents="jsModulesInfo.trackingEvents" :bundles="jsModulesInfo.bundles"></BundleListing>
+                <BundleListing :bundleList="bundleList" />
             </b-tab>
             <!--
                 TODO: Find a way of putting the number of scripts on the "Other" tab label.
@@ -60,12 +60,13 @@
                 jsModulesInfo: {
                     bundles: [],
                     trackingEvents: []
-                }
+                },
+                bundleList: undefined
             };
 
             this.loadJsModulesInfo(function (jsModulesInfo) {
                 if (jsModulesInfo) {
-                    bundles.jsModulesInfo(jsModulesInfo);
+                    data.bundleList = bundles.jsModulesInfo(jsModulesInfo);
                 }
                 data.jsModulesInfo = jsModulesInfo;
             });

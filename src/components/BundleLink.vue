@@ -15,7 +15,10 @@
                 if (this.bundle) {
                     return this.bundle;
                 } else if (this.whoExports) {
-                    return bundles.whoExports(this.whoExports);
+                    var exportingBundle = bundles.whoExports(this.whoExports);
+                    if (exportingBundle) {
+                        return exportingBundle.bundleId;
+                    }
                 }
                 return undefined;
             },
