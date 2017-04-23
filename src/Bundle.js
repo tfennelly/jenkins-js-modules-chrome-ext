@@ -54,6 +54,14 @@ export default class Bundle {
         }
     }
 
+    forEachModuleDef(callback) {
+        for (const moduleName in this.moduleDefs) {
+            if (this.moduleDefs.hasOwnProperty(moduleName)) {
+                callback(this.moduleDefs[moduleName]);
+            }
+        }
+    }
+
     getPackage(name, add = false) {
         for (let i = 0; i < this.packages.length; i++) {
             if (this.packages[i].name === name) {

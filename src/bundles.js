@@ -7,6 +7,7 @@ import _s from 'underscore.string';
 import ModuleSpec from '@jenkins-cd/js-modules/js/ModuleSpec';
 import Bundle from './Bundle';
 import BundleList from './BundleList';
+import UnusedExportScanner from './problem-scanners/UnusedExportScanner';
 
 const bundleList = new BundleList();
 
@@ -40,6 +41,10 @@ export default {
                 }
             }
         });
+
+        // Scan the bundles looking for possible errors and warnings, attaching
+        // them to the bundles.
+        doScan(bundleList);
 
         //console.log(bundleList);
 
@@ -108,4 +113,22 @@ function findBundleByScriptPath(scriptPath, bundles) {
     }
 
     return filteredBundleList[0];
+}
+
+function doScan(bundleList) {
+    const scannerList = scanners(bundleList);
+
+    bundleList.bundles.forEach((bundle) => {
+        scannerList.forEach((scanner) => {
+            bundle.forEachModuleDef((moduleDef) => {
+                scanner.checkModuleDef(moduleDef, bundle);
+            });
+        });
+    });
+}
+
+function scanners(bundleList) {
+    return [
+        new UnusedExportScanner(bundleList)
+    ];
 }
