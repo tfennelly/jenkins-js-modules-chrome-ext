@@ -8,6 +8,12 @@
                         <a href="https://github.com/jenkinsci/js-modules/blob/master/FAQs.md#what-is-the-difference-between-a-module-and-a-bundle" target="_blank">See the <code>js-modules</code> FAQ</a>.
                     </Info>
                     <p/>
+                    <div id="all-bundle-info" v-if="bundleList && bundleList.bundles.length > 0">
+                        <Alert type="info">
+                            {{bundleList.bundles.length}} bundles loaded on page.<br/>
+                            Total source size {{bundleList.size}} (approx).
+                        </Alert>
+                    </div>
                     <div class="loaded" v-if="bundleList">
                         <div :class="bundleNameClasses(bundle)" v-for="bundle in bundleList.bundles" @click="selectBundle(bundle.bundleId)">{{bundle.bundleId}}</div>
                     </div>

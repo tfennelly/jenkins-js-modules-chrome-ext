@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Panel from './Panel.vue';
 import BootstrapVue from 'bootstrap-vue';
+import Alert from './components/Alert.vue'
 import Info from './components/Info.vue';
 import BundleLink from './components/BundleLink.vue';
 
@@ -11,6 +12,7 @@ import BundleLink from './components/BundleLink.vue';
 //      /play/index.js
 //
 Vue.use(BootstrapVue);
+Vue.component('Alert', Alert);
 Vue.component('Info', Info);
 Vue.component('BundleLink', BundleLink);
 
