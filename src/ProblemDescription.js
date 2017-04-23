@@ -14,7 +14,7 @@ export default class ProblemDescription {
         this.summary = summary;
     }
 
-    detail(detail) {
+    gsDetail(detail) {
         if (detail) {
             this.detail = detail;
             return this;
@@ -23,7 +23,7 @@ export default class ProblemDescription {
         }
     }
 
-    refLinks(refLinks) {
+    gsRefLinks(refLinks) {
         if (refLinks) {
             this.refLinks = refLinks;
             return this;
