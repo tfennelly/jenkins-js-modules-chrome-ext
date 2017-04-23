@@ -16,6 +16,8 @@ export default class Bundle {
     exports = [];
     imports = [];
     size = 0;
+    errors = [];
+    warnings = [];
 
     constructor(script, loadEvent, bundleData) {
         this.script = script;
@@ -103,4 +105,55 @@ export default class Bundle {
 
         return false;
     }
+
+    /**
+     * Add an error description on an object.
+     * @param problemDesc The description of the error. See ProblemDescription.js.
+     * @param on The "on" object. Typically a bundle module definition (ala moduleDefs).
+     */
+    addError(problemDesc, on) {
+        addProblem(problemDesc, on, this.errors);
+    }
+
+    /**
+     * Get the list of errors associated with an object.
+     * @param on The "on" object. Typically a bundle module definition (ala moduleDefs).
+     */
+    getErrors(on) {
+        return getProblems(on, this.errors);
+    }
+
+
+    /**
+     * Add a warning description on an object.
+     * @param problemDesc The description of the warning. See ProblemDescription.js.
+     * @param on The "on" object. Typically a bundle module definition (ala moduleDefs).
+     */
+    addWarning(problemDesc, on) {
+        addProblem(problemDesc, on, this.warnings);
+    }
+
+    /**
+     * Get the list of warnings associated with an object.
+     * @param on The "on" object. Typically a bundle module definition (ala moduleDefs).
+     */
+    getWarning(on) {
+        return getProblems(on, this.warnings);
+    }
+}
+
+function addProblem(problemDesc, on, problemList) {
+    problemList.push({
+        on: on,
+        desc: problemDesc
+    });
+}
+
+function getProblems(on, problemList) {
+    // See addProblem above.
+    return problemList.map((entry) => {
+        if (entry.on === on) {
+            return entry.desc;
+        }
+    });
 }
