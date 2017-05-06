@@ -98,7 +98,10 @@
     .bundleListing .bundleName:hover {
         cursor: pointer;
     }
-    .bundleListing .bundleName:hover, .bundleListing .bundleName.selected {
+    .bundleListing .bundleName:hover {
+        background: #f0f0f0;
+    }
+    .bundleListing .bundleName.selected {
         background: #989898;
         color: white;
     }
