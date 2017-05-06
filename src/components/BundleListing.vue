@@ -15,7 +15,11 @@
                         </Alert>
                     </div>
                     <div class="loaded" v-if="bundleList">
-                        <div :class="bundleNameClasses(bundle)" v-for="bundle in bundleList.bundles" @click="selectBundle(bundle.bundleId)">{{bundle.bundleId}}</div>
+                        <div :class="bundleNameClasses(bundle)" v-for="bundle in bundleList.bundles" @click="selectBundle(bundle.bundleId)">
+                            {{bundle.bundleId}}
+                            <b-badge v-if="bundle.warnings.length > 0" variant="warning">{{bundle.warnings.length}}</b-badge>
+                            <b-badge v-if="bundle.errors.length > 0" variant="danger">{{bundle.errors.length}}</b-badge>
+                        </div>
                     </div>
                 </td>
                 <td class="detail">

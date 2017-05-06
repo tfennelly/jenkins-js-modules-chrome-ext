@@ -7,7 +7,6 @@ export default class ProblemDescription {
     label = undefined;
     summary = undefined;
     detail = undefined;
-    refLinks = undefined;
 
     constructor(label, summary) {
         this.label = label;
@@ -20,15 +19,6 @@ export default class ProblemDescription {
             return this;
         } else {
             return this.detail;
-        }
-    }
-
-    gsRefLinks(refLinks) {
-        if (refLinks) {
-            this.refLinks = refLinks;
-            return this;
-        } else {
-            return this.refLinks;
         }
     }
 }

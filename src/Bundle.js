@@ -57,7 +57,10 @@ export default class Bundle {
     forEachModuleDef(callback) {
         for (const moduleName in this.moduleDefs) {
             if (this.moduleDefs.hasOwnProperty(moduleName)) {
-                callback(this.moduleDefs[moduleName]);
+                const escapeVal = callback(this.moduleDefs[moduleName]);
+                if (escapeVal !== undefined) {
+                    return escapeVal;
+                }
             }
         }
     }
