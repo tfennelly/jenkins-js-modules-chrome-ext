@@ -97,6 +97,9 @@
                 <input id="moduleDefsFilter" type="text" placeholder="filter" v-model="moduleDefsFilter" class="form-control" @change="setTextFilter(moduleDefsFilter)" />
                 <span title="Show modules whose code is inlined/bundled in the bundle"><input class="checkbox" type="checkbox" v-model="showBundledModules" @change="setShowBundledFilter(showBundledModules)" /> Inlined</span>
                 <span title="Show modules whose code is imported from another bundle (not inlined)"><input class="checkbox" type="checkbox" v-model="showImportedModules" @change="setShowImportedFilter(showImportedModules)" /> Imported</span>
+                <span title="Show modules for which no errors or warnings were found"><input class="checkbox" type="checkbox" v-model="showOKModules" @change="setShowOKFilter(showOKModules)" /> Ok</span>
+                <span title="Show modules for which errors were found"><input class="checkbox" type="checkbox" v-model="showErrorModules" @change="setShowErrorFilter(showErrorModules)" /> Error</span>
+                <span title="Show modules for which warnings were found"><input class="checkbox" type="checkbox" v-model="showWarningModules" @change="setShowWarningFilter(showWarningModules)" /> Warning</span>
             </div>
             <div v-for="moduleDefInst in filteredModuleDefs">
                 <ModuleDef :moduleDef="moduleDefInst" :bundle="bundle"></ModuleDef>
@@ -140,13 +143,25 @@
             },
             setShowImportedFilter: function(showImportedModules) {
                 this.showImportedModules = showImportedModules;
+            },
+            setShowOKFilter: function(showOKModules) {
+                this.showOKModules = showOKModules;
+            },
+            setShowErrorFilter: function(showErrorModules) {
+                this.showErrorModules = showErrorModules;
+            },
+            setShowWarningFilter: function(showWarningModules) {
+                this.showWarningModules = showWarningModules;
             }
         },
         data: function () {
             return {
                 textFilter: undefined,
                 showBundledModules: true,
-                showImportedModules: true
+                showImportedModules: true,
+                showOKModules: true,
+                showErrorModules: true,
+                showWarningModules: true
             }
         },
         computed: {
@@ -175,6 +190,19 @@
                             continue;
                         }
                         if (moduleDef.stubbed && !this.showImportedModules) {
+                            continue;
+                        }
+                        
+                        const errors = this.bundle.getErrors(moduleDef);
+                        const warnings = this.bundle.getWarnings(moduleDef);
+                        
+                        if (!this.showOKModules && errors.length === 0 && warnings.length === 0) {
+                            continue;
+                        }
+                        if (!this.showErrorModules && errors.length > 0) {
+                            continue;
+                        }
+                        if (!this.showWarningModules && warnings.length > 0) {
                             continue;
                         }
 
