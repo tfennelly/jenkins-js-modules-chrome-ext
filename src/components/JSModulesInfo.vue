@@ -27,7 +27,7 @@
                     generated with an older version of <code><a href="https://www.npmjs.com/package/@jenkins-cd/js-builder" target="_blank">js-builder</a></code>.
                     <p/>
                     <b-alert show>
-                        Version <code>0.0.55</code> (or greater) of <code><a href="https://www.npmjs.com/package/@jenkins-cd/js-builder" target="_blank">js-builder</a></code> must be used to generate all <code>js-modules</code> compatible bundles.
+                        Version <code>0.0.57</code> (or greater) of <code><a href="https://www.npmjs.com/package/@jenkins-cd/js-builder" target="_blank">js-builder</a></code> must be used to generate all <code>js-modules</code> compatible bundles.
                         Bundles generated with an earlier version will not be analysable in these Developer tools.
                     </b-alert>
                 </div>
