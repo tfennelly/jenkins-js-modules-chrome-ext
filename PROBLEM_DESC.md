@@ -9,7 +9,7 @@ This warning occurs when a module is found inlined into a bundle and where the p
 To do the import, simply specify the `import('<package-name>')` instruction on the `bundle` generation command in the `gulpfile.js`.
 
 ```javascript
-const builder
+const builder = require('@jenkins-cd/js-builder');
 
 builder.bundle('src/js/mycoolapp.js')
     .import('@jenkins-cd/js-extensions@any')
