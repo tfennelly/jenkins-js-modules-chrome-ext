@@ -36,7 +36,12 @@
         <div class="jump-tos">
             <div><a href="#import-export-heading">Import/Export</a></div>
             <div><a href="#packages-heading">Package Listing</a></div>
-            <div><a href="#modules-heading">Module Listing</a></div>
+            <div>
+                <a href="#modules-heading">Module Listing</a>
+                <!-- TODO: refine this once we start detecting package level problems -->
+                <b-badge v-if="bundle.warnings.length > 0" variant="warning">{{bundle.warnings.length}}</b-badge>
+                <b-badge v-if="bundle.errors.length > 0" variant="danger">{{bundle.errors.length}}</b-badge>
+            </div>
         </div>
 
         <h4 id="import-export-heading">Import/Export</h4>
