@@ -116,7 +116,7 @@
         },
         methods: {
             problemDocLink: function(problemDesc) {
-                return `https://github.com/tfennelly/jenkins-js-modules-chrome-ext/blob/master/PROBLEM_DESC.md#${problemDesc.label}`;
+                return `https://github.com/tfennelly/jenkins-js-modules-chrome-ext/blob/master/PROBLEM_DESC.md#${problemDesc.label.toLowerCase()}`;
             }
         }
     }
