@@ -14,3 +14,13 @@ Once installed, simply open the Developer Tools window from the View menu of the
 ![screenshot](./docs/bundle-overview.png)
 
 ![screenshot](./docs/bundle-module-listing.png)
+
+## Adding more "scanners"
+
+One of the key benefits of this plugin is in "scanning" the installed bundles and discovering potential errors or warnings.
+Adding more "scanners" would be the main way of contributing to this plugin.
+
+We're currently putting the scanner implementations in [src/problem-scanners](src/problem-scanners). Scanner implementations should
+extend the [ProblemScanner](src/ProblemScanner.js) class. See [src/problem-scanners/UnusedExportScanner](src/problem-scanners/UnusedExportScanner.js) as an example.
+
+After creating a scanner implementation, you'll need to update the `scanners` function in [src/bundles.js](src/bundles.js).
