@@ -1,3 +1,5 @@
+This page contains details about warnings and errors that this bundle analyser can produce. 
+
 ## UNUSED_EXPORT_MISSING_IMPORT
 
 > Unused Export - Missing Import
