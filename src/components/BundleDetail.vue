@@ -94,7 +94,7 @@
                 <span title="Show modules whose code is imported from another bundle (not inlined)"><input class="checkbox" type="checkbox" v-model="showImportedModules" @change="setShowImportedFilter(showImportedModules)" /> Imported</span>
             </div>
             <div v-for="moduleDefInst in filteredModuleDefs">
-                <ModuleDef :moduleDef="moduleDefInst"></ModuleDef>
+                <ModuleDef :moduleDef="moduleDefInst" :bundle="bundle"></ModuleDef>
             </div>
             <div class="text-warning" v-if="filteredModuleDefs.length === 0">
                 No modules to show. Try changing the filter parameters.

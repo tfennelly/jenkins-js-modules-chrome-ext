@@ -148,7 +148,7 @@ export default class Bundle {
      * Get the list of warnings associated with an object.
      * @param on The "on" object. Typically a bundle module definition (ala moduleDefs).
      */
-    getWarning(on) {
+    getWarnings(on) {
         return getProblems(on, this.warnings);
     }
 }
@@ -162,9 +162,11 @@ function addProblem(problemDesc, on, problemList) {
 
 function getProblems(on, problemList) {
     // See addProblem above.
-    return problemList.map((entry) => {
+    const problems = [];
+    problemList.filter((entry) => {
         if (entry.on === on) {
-            return entry.desc;
+            problems.push(entry.desc);
         }
     });
+    return problems;
 }
